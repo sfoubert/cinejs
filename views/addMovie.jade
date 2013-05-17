@@ -1,0 +1,28 @@
+extends layout
+
+block content
+	h1= title
+	p Ajouter un film
+
+	div.span12
+		form
+			fieldset
+				legend Mon film
+				label Titre
+				input(type='text')
+				label Date
+				input(type='text')
+				label Commentaire
+				input(type='text')
+			//button.btn(type='submit') Submit
+			a(href='/cinema')
+				button.btn.btn-primary(type='button') Ajouter
+				
+	div.btn-group
+		a(href='/cinema')
+			button.btn.btn-primary(type='button') Ajouter
+		a(href='/cinema')
+			button.btn.btn-primary(type='button') Modifier
+		a(href='/cinema')
+			button.btn.btn-primary(type='button') Supprimer
+

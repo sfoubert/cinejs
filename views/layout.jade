@@ -1,0 +1,68 @@
+doctype 5
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/style.css')
+
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
+		script(src='/javascripts/jquery-1.9.1.min.js')
+		script(src='/bootstrap/js/bootstrap.js')
+
+	body
+
+		div.container-fluid
+			div.row-fluid
+				div.span12
+					div.navbar.navbar-fixed-top.navbar-inverse
+						div.navbar-inner
+							div.container-fluid
+								a(data-target='.navbar-responsive-collapse',data-toggle='collapse').btn.btn-navbar
+									span.icon-bar
+									span.icon-bar
+									span.icon-bar
+								a(href='#').brand #{title}
+								div.nav-collapse.collapse.navbar-responsive-collapse
+									ul.nav
+										li.active
+											a(href='#') Home
+										li
+											a(href='#') Link
+										li
+											a(href='#') Link
+										li.dropdown
+											a(href='#',data-toggle='dropdown').dropdown-toggle Dropdown
+												strong.caret
+											ul.dropdown-menu
+												li
+													a(href='#') Action
+												li
+													a(href='#') Another Action
+												li
+													a(href='#') Something else here
+												li.divider
+												li.nav-header
+													Nav header
+												li
+													a(href='#') Separated link
+												li
+													a(href='#') One more separated link
+
+									ul.nav.pull-right
+										li
+											a(href='#') Link
+										li.divider-vertical
+										li.dropdown
+											a(href='#',data-toggle='dropdown').dropdown-toggle Dropdown
+												strong.caret
+											ul.dropdown-menu
+												li
+													a(href='#') Action
+												li
+													a(href='#') Another action
+												li
+													a(href='#') Something else here
+												li.divider
+												li
+													a(href='#') Separated link
+
+		block content
