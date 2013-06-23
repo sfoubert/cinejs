@@ -4,19 +4,25 @@ block content
 	h1= title
 	p Ajouter un film
 
+	script
+		$(document).ready(function() {
+			$('#dp3').datepicker();
+		});
+
 	div.span12
-		form
+		form(action='/cinema/post', method='POST')
 			fieldset
 				legend Mon film
 				label Titre
-				input(type='text')
+				input(name='title', type='text')
 				label Date
-				input(type='text')
+				.input-append.date(id='dp3', data-date='12-02-2012', data-date-format='dd-mm-yyyy')
+					input.span2(size='16', type='text', value='12-02-2012')
+					span.add-on
+						i.icon-th
 				label Commentaire
 				input(type='text')
-			//button.btn(type='submit') Submit
-			a(href='/cinema')
-				button.btn.btn-primary(type='button') Ajouter
+			button.btn.btn-primary(type='submit') Ajouter
 				
 	div.btn-group
 		a(href='/cinema')
