@@ -17,7 +17,7 @@ block content
 			th Date
 		each movie in movies
 			tr.success
-				td #{movie.movie}
+				td #{movie.title}
 				td #{moment(movie.viewdate).format("DD-MMM-YYYY")}
 
 	div.pagination.pagination-centered

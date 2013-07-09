@@ -17,9 +17,20 @@ Lancer le navigateur
 
 
 Mongo DB
+```sh
  D:\Java\mongodb\bin>mongo.exe
- db.cinema.remove()
- db.cinema.insert({movie:"Stargate"})
- db.cinema.find()
+ use cinema
+ db.movie.remove()
+ db.movie.insert({movie:"Stargate"})
+ db.movie.find()
 
  db.getCollectionNames()
+```
+
+ Commandes Git
+ ```sh
+ $ git commit -a
+ $ git remote add origin https://github.com/sfoubert/cinejs.git
+ $ git remote -v
+ $ git push -u origin master
+ ```

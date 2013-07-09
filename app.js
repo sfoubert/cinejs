@@ -56,10 +56,7 @@ app.get('/users', user.list);
 app.get('/cinema', cinema.list);
 app.get('/cinema/list/:id', cinema.list);
 app.get('/cinema/add', cinema.addMovie);
-app.post('/cinema/post', function(req, res){ 
-    console.log('Post movie : ' + req.body);
-    res.render('index', { title: 'Cinema JS'});
-});
+app.post('/cinema/post',  cinema.postMovie);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

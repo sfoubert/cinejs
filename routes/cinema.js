@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
     moment = require('moment'),
-    Cinema = mongoose.model('Cinema');
+    MovieModel = mongoose.model('Movie');
 
 var limit = 20;
 
@@ -15,27 +15,20 @@ exports.list = function(req, res){
 	}
 
 
-	Cinema.find({}).sort({viewdate: -1}).limit(limit).skip(idStart).exec(function(err, result) { 
+	MovieModel.find({}).sort({viewdate: -1}).limit(limit).skip(idStart).exec(function(err, result) { 
 	  if (err) { throw err; }
 
-/*
-	  // On va parcourir le resultat et les afficher joliment
-	  var comm;
-	  for (var i = 0, l = result.length; i < l; i++) {
-	    comm = result[i];
-	    console.log('------------------------------');
-	    console.log('Titre : ' + comm.movie);
-	    console.log('Date : ' + comm.viewdate);
-	    console.log('Commentaire : ' + comm.comment);
-	    console.log('------------------------------');
-	  }
-*/
-      res.render('cinema', { 
-      	title: 'Liste des films',
-      	movies: result,
-      	count: result.length,
-      	moment: moment
-       });
+		MovieModel.count({}, function(err, count){
+		    console.log( "Number of movies:", count);
+
+		      res.render('cinema', { 
+		      	title: 'Liste des films',
+		      	movies: result,
+		      	count: count,
+		      	moment: moment
+		       });
+
+		})
 
 	});
 
@@ -51,7 +44,16 @@ exports.addMovie = function(req, res){
 
 exports.postMovie = function(req, res){ 
     console.log('Post movie : ' + req.body);
-    console.log('seb');
-  	console.log(req.title);
-    res.render('index', { title: 'Cinema JS'});
+  	var viewdate = req.body.viewdate.substring(6,10) + '-' + req.body.viewdate.substring(3,5) + '-' + req.body.viewdate.substring(0,2);
+
+	var movie = new MovieModel();
+	movie.title = req.body.title;
+	movie.viewdate = viewdate;
+	movie.comment = req.body.comment;
+
+	movie.save(function (e) {
+	    res.redirect('/cinema');
+	  });
+
+    
 }

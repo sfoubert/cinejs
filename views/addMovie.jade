@@ -4,9 +4,9 @@ block content
 	h1= title
 	p Ajouter un film
 
-	script
+	script.
 		$(document).ready(function() {
-			$('#dp3').datepicker();
+			$('#viewdate').datepicker();
 		});
 
 	div.span12
@@ -16,12 +16,12 @@ block content
 				label Titre
 				input(name='title', type='text')
 				label Date
-				.input-append.date(id='dp3', data-date='12-02-2012', data-date-format='dd-mm-yyyy')
-					input.span2(size='16', type='text', value='12-02-2012')
+				.input-append.date(id='viewdate', data-date='10-07-2013', data-date-format='dd-mm-yyyy')
+					input.span2(name='viewdate', size='16', type='text', value='12-02-2012')
 					span.add-on
 						i.icon-th
 				label Commentaire
-				input(type='text')
+				input(name='comment', type='text')
 			button.btn.btn-primary(type='submit') Ajouter
 				
 	div.btn-group
