@@ -22,49 +22,23 @@ html
 									span.icon-bar
 									span.icon-bar
 									span.icon-bar
-								a(href='#').brand #{title}
+								a(href='/cinema').brand #{title}
 								div.nav-collapse.collapse.navbar-responsive-collapse
 									ul.nav
 										li.active
-											a(href='#') Home
+											a(href='/cinema') Liste
 										li
-											a(href='#') Link
-										li
-											a(href='#') Link
-										li.dropdown
-											a(href='#',data-toggle='dropdown').dropdown-toggle Dropdown
-												strong.caret
-											ul.dropdown-menu
-												li
-													a(href='#') Action
-												li
-													a(href='#') Another Action
-												li
-													a(href='#') Something else here
-												li.divider
-												li.nav-header
-													Nav header
-												li
-													a(href='#') Separated link
-												li
-													a(href='#') One more separated link
+											a(href='/cinema/viewAdd') Ajouter un film
 
 									ul.nav.pull-right
-										li
-											a(href='#') Link
 										li.divider-vertical
 										li.dropdown
-											a(href='#',data-toggle='dropdown').dropdown-toggle Dropdown
+											a(href='#',data-toggle='dropdown').dropdown-toggle Graphiques
 												strong.caret
 											ul.dropdown-menu
 												li
-													a(href='#') Action
-												li
-													a(href='#') Another action
-												li
-													a(href='#') Something else here
+													a(href='#') Par an
 												li.divider
 												li
-													a(href='#') Separated link
-
+													a(href='#') Par mois
 		block content

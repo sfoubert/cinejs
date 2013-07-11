@@ -7,18 +7,21 @@ block content
 	span.badge.badge-inverse #{count}
 	span  films
 
-	div.btn-group
-		a(href='/cinema/add')
-			button.btn.btn-primary Ajouter
-
 	table.table
 		tr
 			th Titre
 			th Date
+			th Actions
 		each movie in movies
 			tr.success
 				td #{movie.title}
 				td #{moment(movie.viewdate).format("DD-MMM-YYYY")}
+				td
+						div.btn-group
+							a(href='/cinema/viewUpdate/' + movie._id)
+								button.btn.btn-primary(type='button') Modifier
+							a(href='/cinema/delete/' + movie._id)
+								button.btn.btn-primary(type='button') Supprimer
 
 	div.pagination.pagination-centered
 		ul

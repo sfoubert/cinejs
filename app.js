@@ -55,8 +55,11 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/cinema', cinema.list);
 app.get('/cinema/list/:id', cinema.list);
-app.get('/cinema/add', cinema.addMovie);
+app.get('/cinema/viewAdd', cinema.viewAddMovie);
+app.get('/cinema/viewUpdate/:id', cinema.viewUpdateMovie);
 app.post('/cinema/post',  cinema.postMovie);
+app.get('/cinema/delete/:id', cinema.deleteMovie);
+app.post('/cinema/update/:id', cinema.updateMovie);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

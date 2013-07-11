@@ -23,7 +23,8 @@ block content
 						i.icon-th
 				label Commentaire
 				input(name='comment', type='text', value=movie.comment)
-			button.btn.btn-primary(type='submit') #{submit}
-			a(href='/cinema')
-				button.btn.btn-primary(type='button') Annuler
+			div.btn-group
+				button.btn.btn-primary(type='submit') #{submit}
+				a(href='/cinema')
+					button.btn.btn-primary(type='button') Annuler
 
