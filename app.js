@@ -31,7 +31,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-/*
 console.log('connexion');
 mongoose.connect('mongodb://localhost/cinema', function(err) {
   if (err) { 
@@ -39,7 +38,7 @@ mongoose.connect('mongodb://localhost/cinema', function(err) {
     throw err; 
   }
 });
-*/
+
 // Bootstrap models
 var models_path = __dirname + '/models'
 fs.readdirSync(models_path).forEach(function (file) {
