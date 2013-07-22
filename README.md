@@ -29,6 +29,8 @@ Mongo DB
 
  Commandes Git
  ```sh
+ $ git add .
+ $ git remove -Rf node_modules/
  $ git commit -a
  $ git remote add origin https://github.com/sfoubert/cinejs.git
  $ git remote -v

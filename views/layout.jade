@@ -7,6 +7,7 @@ html
 		link(rel='stylesheet', href='/datepicker/css/datepicker.css')
 			
 		script(src='/javascripts/jquery-1.9.1.min.js')
+		script(src='/javascripts/Chart.js')
 		script(src='/bootstrap/js/bootstrap.js')
 		script(src='/datepicker/js/bootstrap-datepicker.js')
 
@@ -37,8 +38,8 @@ html
 												strong.caret
 											ul.dropdown-menu
 												li
-													a(href='#') Par an
+													a(href='/chart/show?view=year') Par an
 												li.divider
 												li
-													a(href='#') Par mois
+													a(href='/chart/show?view=month') Par mois
 		block content
