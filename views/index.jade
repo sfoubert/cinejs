@@ -16,7 +16,9 @@ block content
 			td Jack Reacher
 			td 01-01-2013
 			td
-				a(href='#myModal', role='button', class='btn', data-toggle='modal') Imdb
+				div.btn-group
+					a.btn(href='#myModal', role='button', class='btn', data-toggle='modal')
+						i.icon-search
 
 	div.pagination.pagination-centered
 		ul
@@ -40,22 +42,21 @@ block content
 	div#myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 		div.modal-header
 			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-			h3#myModalLabel Modal header
+			h3#myModalLabel Jack Reacher
 		div.modal-body
 			p My movie details from IMDB
-			img#my_image(src='http://www.ucpa-vacances.com/xflow/kukini-ucpa/docroot/ucpa/images/logo-ucpa.gif')
+			img#poster(src='/images/wait.gif')
 		div.modal-footer
 			button.btn(data-dismiss='modal', aria-hidden='true') Close
 
 	script.
 		$(document).ready(function() {
 			$('#myModal').on('shown', function () {
-
+				
 				$.getJSON('http://mymovieapi.com/?title=Jack Reacher&type=json&plot=simple&episode=1&limit=1&yg=0&mt=none&lang=en-US&offset=&aka=simple&release=simple&business=0&tech=0', function(data) {
 					console.log(data);
-					$("#my_image").attr("src",data[0].poster);
+					$("#poster").attr("src",data[0].poster);
 				});
-
 				
 			})
 		});
