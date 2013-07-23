@@ -30,7 +30,9 @@ Mongo DB
  Commandes Git
  ```sh
  $ git add .
+ $ git rm -r --cached node_modules/
  $ git remove -Rf node_modules/
+ $ git diff --cached app.js
  $ git commit -a
  $ git remote add origin https://github.com/sfoubert/cinejs.git
  $ git remote -v

@@ -31,7 +31,8 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-console.log('connexion');
+
+console.log('connexion DB');
 mongoose.connect('mongodb://localhost/cinema', function(err) {
   if (err) { 
     mongoose.connection.close();
