@@ -11,17 +11,24 @@ block content
 		tr
 			th Titre
 			th Date
+			th Imdb
 			th Actions
 		each movie in movies
 			tr.success
 				td #{movie.title}
 				td #{moment(movie.viewdate).format("DD-MMM-YYYY")}
 				td
-						div.btn-group
-							a(href='/cinema/viewUpdate/' + movie._id)
-								button.btn.btn-primary(type='button') Modifier
-							a(href='/cinema/delete/' + movie._id)
-								button.btn.btn-primary(type='button') Supprimer
+					div.btn-group
+						a.btn.clickMyModal(href='#myModal', role='button', data-toggle='modal', movie_title=movie.title)
+							i.icon-search
+				td
+					div.btn-group
+						a(href='/cinema/viewUpdate/' + movie._id)
+							button.btn.btn-primary(type='button') Modifier
+						a(href='/cinema/delete/' + movie._id)
+							button.btn.btn-primary(type='button') Supprimer
+
+	input(type='hidden', id="movieTitle", value="")
 
 	div.pagination.pagination-centered
 		ul
@@ -39,3 +46,32 @@ block content
 				a(href='/cinema/list/80') 5
 			li
 				a(href='/cinema/list/100') Next
+
+	// Modal
+	div#myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		div.modal-header
+			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+			h3#myModalLabel Titre
+		div.modal-body
+			p My movie details from IMDB
+			img#poster(src='/images/wait.gif')
+		div.modal-footer
+			button.btn(data-dismiss='modal', aria-hidden='true') Close
+
+	script.
+		$(document).ready(function() {
+
+			$('.clickMyModal').on('click', function () {
+				$("#poster").attr("src","/images/wait.gif");
+				$('#movieTitle').val($(this).attr('movie_title'));
+			});
+
+			$('#myModal').on('shown', function () {
+				var param = "title=" + $('#movieTitle').val() + "&type=json&plot=simple&episode=1&limit=1&yg=0&mt=none&lang=en-US&offset=&aka=simple&release=simple&business=0&tech=0";
+				$.getJSON('http://mymovieapi.com/?'+param, function(data) {
+					console.log(data);
+					$("#poster").attr("src",data[0].poster);
+				});
+				
+			});
+		});
