@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 var MovieSchema = new mongoose.Schema({
   title : String,
   viewdate : { type : Date, default : Date.now },
-  comment : String
+  comment : String,
+  user_id : String
 },
 { collection : 'movie' }
 );

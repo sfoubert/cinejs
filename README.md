@@ -3,13 +3,13 @@ cinejs
 
 Node JS Application for Cinema Management
 ```sh
-  $ git clone git://github.com/madhums/nodejs-express-mongoose-demo.git
+  $ git clone https://github.com/sfoubert/cinejs.git
   $ npm install
 ```
 
 Lancer serveur
 ```sh
-  $ nodemon aps.js
+  $ nodemon app.js
 ```
 
 Lancer le navigateur
