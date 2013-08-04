@@ -7,45 +7,54 @@ block content
 	span.badge.badge-inverse #{count}
 	span films
 
-	table.table
-		tr
-			th Titre
-			th Date
-			th Imdb
-			th Actions
-		each movie in movies
-			tr.success
-				td #{movie.title}
-				td #{moment(movie.viewdate).format("DD-MMM-YYYY")}
-				td
-					div.btn-group
-						a.btn.clickMyModal(href='#myModal', role='button', data-toggle='modal', movie_title=movie.title)
-							i.icon-search
-				td
-					div.btn-group
-						a(href='/cinema/viewUpdate/' + movie._id)
-							button.btn.btn-primary(type='button') Modifier
-						a(href='/cinema/delete/' + movie._id)
-							button.btn.btn-primary(type='button') Supprimer
+	script(src='/javascripts/ng-cinejs.js')
 
-	input(type='hidden', id="movieTitle", value="")
+	div(ng-controller='CinemaController')
+		div(infinite-scroll='reddit.nextPage()', infinite-scroll-disabled='reddit.busy', infinite-scroll-distance='0')
+			table.table
+				tr
+					th Titre
+					th Date
+					th Imdb
+					th Actions
+				each movie in movies
+					tr.success
+						td #{movie.title}
+						td #{moment(movie.viewdate).format("DD-MMM-YYYY")}
+						td
+							div.btn-group
+								a.btn.clickMyModal(href='#myModal', role='button', data-toggle='modal', movie_title=movie.title)
+									i.icon-search
+						td
+							div.btn-group
+								a(href='/cinema/viewUpdate/' + movie._id)
+									button.btn.btn-primary(type='button') Modifier
+								a(href='/cinema/delete/' + movie._id)
+									button.btn.btn-primary(type='button') Supprimer
 
-	div.pagination.pagination-centered
-		ul
-			li
-				a(href='/cinema/list/0') Prev
-			li
-				a(href='/cinema/list/0') 1
-			li
-				a(href='/cinema/list/20') 2
-			li
-				a(href='/cinema/list/40') 3
-			li
-				a(href='/cinema/list/60') 4
-			li
-				a(href='/cinema/list/80') 5
-			li
-				a(href='/cinema/list/100') Next
+			input(type='hidden', id="movieTitle", value="")
+
+			div.pagination.pagination-centered
+				ul
+					li
+						a(href='/cinema/list/0') Prev
+					li
+						a(href='/cinema/list/0') 1
+					li
+						a(href='/cinema/list/20') 2
+					li
+						a(href='/cinema/list/40') 3
+					li
+						a(href='/cinema/list/60') 4
+					li
+						a(href='/cinema/list/80') 5
+					li
+						a(href='/cinema/list/100') Next
+
+			div(ng-show='reddit.busy') Loading data...
+	input(type='text', ng-model='yourName', placeholder='Enter a name here')
+	hr
+	h1 Hello {{yourName}}!
 
 	// Modal
 	div#myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
