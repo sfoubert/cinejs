@@ -7,10 +7,8 @@ block content
 	span.badge.badge-inverse #{count}
 	span films
 
-	script(src='/javascripts/ng-cinejs.js')
-
 	div(ng-controller='CinemaController')
-		div(infinite-scroll='reddit.nextPage()', infinite-scroll-disabled='reddit.busy', infinite-scroll-distance='0')
+		div(infinite-scroll='loadMore()', infinite-scroll-disabled='infinite-scroll.busy', infinite-scroll-distance='2')
 			table.table
 				tr
 					th Titre
@@ -51,10 +49,7 @@ block content
 					li
 						a(href='/cinema/list/100') Next
 
-			div(ng-show='reddit.busy') Loading data...
-	input(type='text', ng-model='yourName', placeholder='Enter a name here')
-	hr
-	h1 Hello {{yourName}}!
+			div(ng-show='infinite-scroll.busy') Loading data...
 
 	// Modal
 	div#myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')

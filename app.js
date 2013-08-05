@@ -32,13 +32,13 @@ if ('development' == app.get('env')) {
 }
 
 
-console.log('connexion DB');
+console.log('connexion DB');/*
 mongoose.connect('mongodb://localhost/cinema', function(err) {
   if (err) { 
     mongoose.connection.close();
     throw err; 
   }
-});
+});*/
 
 // Bootstrap models
 var models_path = __dirname + '/models'
