@@ -1,5 +1,5 @@
 doctype 5
-html
+html(ng-app)
 	head
 		title= title
 		link(rel='stylesheet', href='/stylesheets/style.css')
@@ -7,12 +7,15 @@ html
 		link(rel='stylesheet', href='/datepicker/css/datepicker.css')
 			
 		script(src='/javascripts/jquery-1.9.1.min.js')
+		script(src='/javascripts/angular.min.js')
+		script(src='/javascripts/ng-infinite-scroll.min.js')
 		script(src='/javascripts/Chart.js')
 		script(src='/bootstrap/js/bootstrap.js')
 		script(src='/datepicker/js/bootstrap-datepicker.js')
 
 	body
-
+		a(href='https://github.com/sfoubert')
+			img(style='position: fixed; top: 40px; right: 0; border: 0;', src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png', alt='Fork me on GitHub')
 		div.container-fluid
 			div.row-fluid
 				div.span12
