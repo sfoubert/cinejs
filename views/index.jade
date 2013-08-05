@@ -6,7 +6,9 @@ block content
 
 	span.badge.badge-inverse 86
 	span films
-
+	span
+		input.input-medium.search-query(type='text')
+		button.btn(type='submit') Search
 	div(ng-controller='CinemaController')
 		div(infinite-scroll='loadMore()', infinite-scroll-disabled='infinite-scroll.busy', infinite-scroll-distance='0')
 			table.table
@@ -14,12 +16,20 @@ block content
 					th Titre
 					th Date
 					th Imdb
-				tr.success
-					td Jack Reacher
-					td 01-01-2013
+				- for (var i=0; i<3; i++)
+					tr.success
+						td Jack Reacher
+						td 01-01-2013
+						td
+							div.btn-group
+								a.btn(href='#myModal', role='button', class='btn', data-toggle='modal')
+									i.icon-search
+				tr.success(ng-repeat='movie in movies')
+					td {{movie.title}}
+					td {{movie.viewdate}}
 					td
 						div.btn-group
-							a.btn(href='#myModal', role='button', class='btn', data-toggle='modal')
+							a.btn.clickMyModal(href='#myModal', role='button', data-toggle='modal', movie_title='{{movie.title}}')
 								i.icon-search
 
 			div.pagination.pagination-centered
@@ -39,14 +49,7 @@ block content
 					li
 						a(href='#') Next
 
-			img(ng-repeat='image in images', ng-src='http://placehold.it/225x250&text={{image}}')
-
-	input(type='text', ng-model='yourName', placeholder='Enter a name here')
-	hr
-	h1 Hello {{yourName}}!
-
 	div(ng-show='infinite-scroll.busy') Loading data...
-
 
 	// Modal
 	div#myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
