@@ -23,14 +23,14 @@ block content
 						td
 							div.btn-group
 								a.btn(href='#myModal', role='button', class='btn', data-toggle='modal')
-									i.icon-search
+									i.glyphicon.glyphicon-search
 				tr.success(ng-repeat='movie in movies')
 					td {{movie.title}}
 					td {{movie.viewdate}}
 					td
 						div.btn-group
 							a.btn.clickMyModal(href='#myModal', role='button', data-toggle='modal', movie_title='{{movie.title}}')
-								i.icon-search
+								i.glyphicon.glyphicon-search
 
 			div.pagination.pagination-centered
 				ul

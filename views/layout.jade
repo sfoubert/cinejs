@@ -4,6 +4,7 @@ html(ng-app='cineApp')
 		title= title
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap-glyphicons.css')
 		link(rel='stylesheet', href='/datepicker/css/datepicker.css')
 			
 		script(src='/javascripts/jquery-1.9.1.min.js')
@@ -17,33 +18,33 @@ html(ng-app='cineApp')
 	body
 		a(href='https://github.com/sfoubert')
 			img(style='position: fixed; top: 40px; right: 0; border: 0;', src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png', alt='Fork me on GitHub')
-		div.container-fluid
-			div.row-fluid
-				div.span12
-					div.navbar.navbar-fixed-top.navbar-inverse
-						div.navbar-inner
-							div.container-fluid
-								a(data-target='.navbar-responsive-collapse',data-toggle='collapse').btn.btn-navbar
-									span.icon-bar
-									span.icon-bar
-									span.icon-bar
-								a(href='/cinema').brand #{title}
-								div.nav-collapse.collapse.navbar-responsive-collapse
-									ul.nav
-										li.active
-											a(href='/cinema') Liste
-										li
-											a(href='/cinema/viewAdd') Ajouter un film
 
-									ul.nav.pull-right
-										li.divider-vertical
-										li.dropdown
-											a(href='#',data-toggle='dropdown').dropdown-toggle Graphiques
-												strong.caret
-											ul.dropdown-menu
-												li
-													a(href='/chart/show?view=year') Par an
-												li.divider
-												li
-													a(href='/chart/show?view=month') Par mois
+		div.navbar-wrapper
+			div.container
+
+				div.navbar.navbar-inverse.navbar-fixed-top
+					div.container
+						a.navbar-toggle(data-target='.navbar-responsive-collapse',data-toggle='collapse')
+							span.glyphicon.glyphicon-bar
+							span.glyphicon.glyphicon-bar
+							span.glyphicon.glyphicon-bar
+						a.navbar-brand(href='/cinema') #{title}
+						div.nav-collapse.collapse.navbar-responsive-collapse
+							ul.nav.navbar-nav
+								li.active
+									a(href='/cinema') Liste
+								li
+									a(href='/cinema/viewAdd') Ajouter un film
+
+							ul.nav.navbar-nav.pull-right
+								li.divider-vertical
+								li.dropdown
+									a(href='#',data-toggle='dropdown').dropdown-toggle Graphiques
+										strong.caret
+									ul.dropdown-menu
+										li
+											a(href='/chart/show?view=year') Par an
+										li.divider
+										li
+											a(href='/chart/show?view=month') Par mois
 		block content
