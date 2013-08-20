@@ -52,15 +52,17 @@ block content
 			div(ng-show='infinite-scroll.busy') Loading data...
 
 	// Modal
-	div#myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-		div.modal-header
-			button.close(type='button', data-dismiss='modal', aria-hidden='true') X
-			h3#myModalLabel Titre
-		div.modal-body
-			p My movie details from IMDB
-			img#poster(src='/images/wait.gif')
-		div.modal-footer
-			button.btn(data-dismiss='modal', aria-hidden='true') Close
+	div#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		div.modal-dialog
+			div.modal-content
+				div.modal-header
+					button.close(type='button', data-dismiss='modal', aria-hidden='true') X
+					h3#myModalLabel Titre
+				div.modal-body
+					p My movie details from IMDB
+					img#poster(src='/images/wait.gif')
+				div.modal-footer
+					button.btn(data-dismiss='modal', aria-hidden='true') Close
 
 	script.
 		$(document).ready(function() {

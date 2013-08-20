@@ -22,7 +22,7 @@ block content
 						td 01-01-2013
 						td
 							div.btn-group
-								a.btn(href='#myModal', role='button', class='btn', data-toggle='modal')
+								a.btn(href='#myModal', role='button', data-toggle='modal')
 									i.glyphicon.glyphicon-search
 				tr.success(ng-repeat='movie in movies')
 					td {{movie.title}}
@@ -52,24 +52,27 @@ block content
 	div(ng-show='infinite-scroll.busy') Loading data...
 
 	// Modal
-	div#myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-		div.modal-header
-			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-			h3#myModalLabel Jack Reacher
-		div.modal-body
-			p My movie details from IMDB
-			img#poster(src='/images/wait.gif')
-		div.modal-footer
-			button.btn(data-dismiss='modal', aria-hidden='true') Close
+	div#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		div.modal-dialog
+			div.modal-content
+				div.modal-header
+					button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+					h3#myModalLabel Jack Reacher
+				div.modal-body
+					p My movie details from IMDB
+					img#poster(src='/images/wait.gif')
+				div.modal-footer
+					button.btn(data-dismiss='modal', aria-hidden='true') Close
 
 	script.
 		$(document).ready(function() {
-			$('#myModal').on('shown', function () {
-				
-				$.getJSON('http://mymovieapi.com/?title=Jack Reacher&type=json&plot=simple&episode=1&limit=1&yg=0&mt=none&lang=en-US&offset=&aka=simple&release=simple&business=0&tech=0', function(data) {
-					console.log(data);
-					$("#poster").attr("src",data[0].poster);
+			$('#myModal').on('show', function () {
+				$("#myModal a.btn").on("click", function(e) {
+					alert('seb');
+					$.getJSON('http://mymovieapi.com/?title=Jack Reacher&type=json&plot=simple&episode=1&limit=1&yg=0&mt=none&lang=en-US&offset=&aka=simple&release=simple&business=0&tech=0', function(data) {
+						console.log(data);
+						$("#poster").attr("src",data[0].poster);
+					});
 				});
-				
-			})
+			});
 		});
