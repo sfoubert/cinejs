@@ -22,7 +22,7 @@ block content
 						td
 							div.btn-group
 								a.btn.clickMyModal(href='#myModal', role='button', data-toggle='modal', movie-title=movie.title)
-									i.glyphicon .glyphicon-search
+									i.glyphicon.glyphicon-search
 						td
 							div.btn-group
 								a(href='/cinema/viewUpdate/' + movie._id)
@@ -32,8 +32,8 @@ block content
 
 			input(type='hidden', id="movieTitle", value="")
 
-			div.pagination.pagination-centered
-				ul
+			div.span12
+				ul.pagination
 					li
 						a(href='/cinema/list/0') Prev
 					li
@@ -70,14 +70,16 @@ block content
 			$('.clickMyModal').on('click', function () {
 				$("#poster").attr("src","/images/wait.gif");
 				$('#movieTitle').val($(this).attr('movie-title'));
-			});
-
-			$('#myModal').on('shown', function () {
 				var param = "title=" + $('#movieTitle').val() + "&type=json&plot=simple&episode=1&limit=1&yg=0&mt=none&lang=en-US&offset=&aka=simple&release=simple&business=0&tech=0";
+				console.log('http://mymovieapi.com/?'+param);
 				$.getJSON('http://mymovieapi.com/?'+param, function(data) {
 					console.log(data);
 					$("#poster").attr("src",data[0].poster.cover);
 				});
+			});
+
+			$('#myModall').on('show', function () {
+
 				
 			});
 		});

@@ -2,7 +2,6 @@ extends layout
 
 block content
 	h1= title
-	p #{title}
 
 	script.
 		$(document).ready(function() {
@@ -11,18 +10,21 @@ block content
 
 	div.span12
 
-		form(action='/cinema/#{action}', method='POST')
+		form(action='/cinema/#{action}', method='POST', role='form')
 			fieldset
 				legend Mon film
-				label Titre
-				input(name='title', type='text', value=movie.title)
-				label Date
-				.input-append.date(id='viewdate', data-date=moment(movie.viewdate).format("DD-MM-YYYY"), data-date-format='dd-mm-yyyy')
-					input.span2(name='viewdate', size='16', type='text', value=moment(movie.viewdate).format("DD-MM-YYYY"))
-					span.add-on
-						i.icon-th
-				label Commentaire
-				input(name='comment', type='text', value=movie.comment)
+				div.form-group
+					label Titre
+					input.form-control(name='title', type='text', placeholder='Titre', value=movie.title)
+				div.form-group
+					label Date
+					div.input-append.date(id='viewdate', data-date=moment(movie.viewdate).format("DD-MM-YYYY"), data-date-format='dd-mm-yyyy')
+						input.form-control.span2(name='viewdate', size='16', type='text', value=moment(movie.viewdate).format("DD-MM-YYYY"))
+						span.add-on
+							span.glyphicon.glyphicon-calendar
+				div.form-group
+					label Commentaire
+					textarea.form-control(rows="3", name='comment', type='text', placeholder='Commentaire', value=movie.comment)
 			div.btn-group
 				button.btn.btn-primary(type='submit') #{submit}
 				a(href='/cinema')

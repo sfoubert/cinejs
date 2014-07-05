@@ -29,6 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
+  app.configure('development', function(){  
+    app.locals.pretty = true;
+});
 }
 
 
