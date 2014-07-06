@@ -24,7 +24,7 @@ block content
 							span.glyphicon.glyphicon-calendar
 				div.form-group
 					label Commentaire
-					textarea.form-control(rows="3", name='comment', type='text', placeholder='Commentaire', value=movie.comment)
+					textarea.form-control(rows="3", name='comment', type='text', placeholder='Commentaire') #{movie.comment}
 			div.btn-group
 				button.btn.btn-primary(type='submit') #{submit}
 				a(href='/cinema')
