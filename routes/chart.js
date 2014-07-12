@@ -1,11 +1,13 @@
 
 var mongoose = require('mongoose'),
+	moment = require('moment'),
     MovieModel = mongoose.model('Movie');
 
 exports.show = function(req, res){
 	console.log('Show chart by ' + req.query.view);
-
-
+	var year = req.query.year;
+	//annee courante par défaut
+	if(year == null) year = moment().format("YYYY");
 
 	callback = function (error, result) {
         if (error){
@@ -29,8 +31,11 @@ exports.show = function(req, res){
 
 	        res.render('chart', {
 	        	view : req.query.view,
+	        	year : year,
 	        	labels : JSON.stringify(labels),
-	        	data : JSON.stringify(data)
+	        	data : JSON.stringify(data),
+	        	moment: moment,
+		      	currentYear: parseInt(moment().format("YYYY"))
 	        });
         }
       }
@@ -51,12 +56,12 @@ exports.show = function(req, res){
 	  ...]
 	  */
 		MovieModel.aggregate(
-			  { $match: { viewdate: { $exists: true,  $gte: new Date('2013-01-01'), $lt: new Date('2014-01-01') } } },
+			  { $match: { viewdate: { $exists: true,  $gte: new Date(year + '-01-01'), $lt: new Date((parseInt(year) + 1) + '-01-01') } } },
 		      { $group : { 
 		           _id : { year: { $year : "$viewdate" }, month: { $month : "$viewdate" }}, 
 		           count : { $sum : 1 }}
 		      },
-	          { $sort: { _id: -1 } },
+	          { $sort: { _id: 1 } },
 		      callback
 		);
 
@@ -67,7 +72,7 @@ exports.show = function(req, res){
 		           _id : { year: { $year : "$viewdate" } }, 
 		           count : { $sum : 1 }}
 		      },
-	          { $sort: { _id: -1 } },
+	          { $sort: { _id: 1 } },
 		      callback
 		);
 	}

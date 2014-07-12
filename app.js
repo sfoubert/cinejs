@@ -36,7 +36,8 @@ if ('development' == app.get('env')) {
 
 
 console.log('connexion DB');
-mongoose.connect('mongodb://seb_fou:sebfou31@ds047438.mongolab.com:47438/cinema', function(err) {
+//mongoose.connect('mongodb://seb_fou:sebfou31@ds047438.mongolab.com:47438/cinema', function(err) {
+  mongoose.connect('mongodb://localhost:27017/test', function(err) {
   if (err) { 
     mongoose.connection.close();
     throw err; 
