@@ -11,8 +11,11 @@ cineApp.controller('CinemaController', function($scope, $http) {
   $scope.wait = "/images/wait.gif";
   $scope.movies = [];
 
+  
+
   $scope.loadMore = function() {
-    for(var i = 1; i <= 10; i++) {
+    console.log("loadMore ... " + $scope.movies.length);
+    for(var i = 1; i <= 20; i++) {
       var movie = new Movie('Jack Reacher', null, '');
       $scope.movies.push(movie);
     }

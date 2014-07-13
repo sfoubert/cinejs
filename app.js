@@ -57,7 +57,6 @@ var user = require('./routes/user')
   , chart = require('./routes/chart');
 
 app.get('/', routes.index);
-app.get('/users', user.list);
 app.get('/cinema', cinema.list);
 app.get('/cinema/list/:id', cinema.list);
 app.get('/cinema/viewAdd', cinema.viewAddMovie);
@@ -65,6 +64,12 @@ app.get('/cinema/viewUpdate/:id', cinema.viewUpdateMovie);
 app.post('/cinema/post',  cinema.postMovie);
 app.get('/cinema/delete/:id', cinema.deleteMovie);
 app.post('/cinema/update/:id', cinema.updateMovie);
+app.get('/user/viewAdd', user.viewAddUser);
+app.get('/user/viewUpdate/:id', user.viewUpdateUser);
+
+app.get('/user', user.list)
+app.post('/user/post',  user.postUser);
+
 app.get('/chart/show', chart.show);
 
 http.createServer(app).listen(app.get('port'), function(){

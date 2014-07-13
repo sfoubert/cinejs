@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 
 // Création du schéma
 var UserSchema = new mongoose.Schema({
-  _id : String,
+//  _id : String,
   name : String,
   firstname : String,
   email : String,

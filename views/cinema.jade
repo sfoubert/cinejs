@@ -8,7 +8,29 @@ block content
 	span films
 
 	div(ng-controller='CinemaController')
-		div(infinite-scroll='loadMore()', infinite-scroll-disabled='infinite-scroll.busy', infinite-scroll-distance='2')
+
+		div.span12
+			ul.pagination
+				li
+					a(href='/cinema/list/0') Deb
+				li
+					a(href='/cinema/list/#{idStart - 20}') Prev
+				li
+					a(href='/cinema/list/0') 1
+				li
+					a(href='/cinema/list/20') 2
+				li 
+					a(href='#') ...
+				li
+					a(href='/cinema/list/60') 4
+				li
+					a(href='/cinema/list/80') 5
+				li
+					a(href='/cinema/list/#{idStart + 20}') Next
+				li
+					a(href='/cinema/list/#{(count /20) *20 }') Fin
+
+		div(infinite-scroll='loadMore()', infinite-scroll-disabled='infinite-scroll.busy', infinite-scroll-distance='0')
 			table.table
 				tr
 					th Titre
@@ -29,27 +51,15 @@ block content
 									button.btn.btn-primary(type='button') Modifier
 								a(href='/cinema/delete/' + movie._id)
 									button.btn.btn-primary(type='button') Supprimer
+				tr.success(ng-repeat='movie in movies')
+					td {{movie.title}}
+					td {{movie.viewdate}}
+					td 
+					td 
 
 			input(type='hidden', id="movieTitle", value="")
 
-			div.span12
-				ul.pagination
-					li
-						a(href='/cinema/list/0') Prev
-					li
-						a(href='/cinema/list/0') 1
-					li
-						a(href='/cinema/list/20') 2
-					li
-						a(href='/cinema/list/40') 3
-					li
-						a(href='/cinema/list/60') 4
-					li
-						a(href='/cinema/list/80') 5
-					li
-						a(href='/cinema/list/100') Next
-
-			div(ng-show='infinite-scroll.busy') Loading data...
+		div(ng-show='infinite-scroll.busy') Loading data...
 
 	// Modal
 	div#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')

@@ -1,0 +1,35 @@
+extends layout
+
+block content
+	h1= title
+
+	script.
+		$(document).ready(function() {
+			$('#birthdate').datepicker();
+		});
+
+	div.span12
+
+		form(action='/user/#{action}', method='POST', role='form')
+			fieldset
+				legend Ajouter utilisateur
+				div.form-group
+					label Nom
+					input.form-control(name='name', type='text', placeholder='Nom', value=user.name)
+				div.form-group
+					label Prénom
+					input.form-control(name='firstname', type='text', placeholder='Prénom', value=user.firstname)
+				div.form-group
+					label Email
+					input.form-control(name='email', type='text', placeholder='Email', value=user.email)
+				div.form-group
+					label Date de naissance
+					div.input-append.date(id='birthdate', data-date=moment(user.birthdate).format("DD-MM-YYYY"), data-date-format='dd-mm-yyyy')
+						input.form-control.span2(name='birthdate', size='16', type='text', value=moment(user.birthdate).format("DD-MM-YYYY"))
+						span.add-on
+							span.glyphicon.glyphicon-calendar
+			div.btn-group
+				button.btn.btn-primary(type='submit') #{submit}
+				a(href='/cinema')
+					button.btn.btn-primary(type='button') Annuler
+

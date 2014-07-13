@@ -4,14 +4,12 @@ var mongoose = require('mongoose'),
 
 var limit = 20;
 
-
 exports.list = function(req, res){
 	var idStart = req.param('id');
 
-	if (idStart == null) {
+	if (idStart == null || idStart < 0) {
 		idStart = 0;
 	}
-
 
 	MovieModel.find({}).sort({viewdate: -1}).limit(limit).skip(idStart).exec(function(err, result) { 
 	  if (err) { throw err; }
@@ -23,13 +21,13 @@ exports.list = function(req, res){
 		      	title: 'Liste des films',
 		      	movies: result,
 		      	count: count,
-		      	moment: moment
+		      	moment: moment,
+		      	idStart: parseInt(idStart)
 		       });
 
 		})
 
 	});
-
 
 };
 
