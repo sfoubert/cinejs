@@ -59,6 +59,7 @@ var user = require('./routes/user')
 app.get('/', routes.index);
 app.get('/cinema', cinema.list);
 app.get('/cinema/list/:id', cinema.list);
+app.get('/cinema/listJSON/:id', cinema.listJSON);
 app.get('/cinema/viewAdd', cinema.viewAddMovie);
 app.get('/cinema/viewUpdate/:id', cinema.viewUpdateMovie);
 app.post('/cinema/post',  cinema.postMovie);

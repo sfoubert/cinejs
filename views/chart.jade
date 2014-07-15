@@ -7,13 +7,12 @@ block content
 	- if (view == 'month')
 		form(method="get", action="/chart/show", role='form')
 			input(type="hidden", name="view", value="#{view}")
-			select(name="year")
+			select(name="year", onchange="submit()")
 				- for (var i=currentYear - 10; i<=currentYear; i++)
 					- if(year == i)
 						option(value="#{i}", selected='selected') #{i}
 					- else
 						option(value="#{i}") #{i}
-			input(type="submit", value="Valider")
 
 	canvas(id='myChart', width='500', height='500')
 

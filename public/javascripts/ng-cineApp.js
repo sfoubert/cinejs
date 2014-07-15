@@ -10,15 +10,19 @@ cineApp.config(function($httpProvider){
 cineApp.controller('CinemaController', function($scope, $http) {
   $scope.wait = "/images/wait.gif";
   $scope.movies = [];
+  $scope.idStart = 0;
 
-  
 
+  // infinite scroll
   $scope.loadMore = function() {
     console.log("loadMore ... " + $scope.movies.length);
-    for(var i = 1; i <= 20; i++) {
-      var movie = new Movie('Jack Reacher', null, '');
-      $scope.movies.push(movie);
-    }
+
+    $http.get('/cinema/listJSON/' + $scope.idStart/*, {cache: true}*/).success(function(data, status, headers, config) {
+      for (var i = 0; i < data.length; i++) {
+        $scope.movies.push(data[i]);
+      };
+      $scope.idStart = $scope.movies.length;
+    });
   };
 
   $scope.showMyModal = function() {
@@ -33,8 +37,12 @@ cineApp.controller('CinemaController', function($scope, $http) {
 
 });
 
-function Movie(title, viewdate, comment) {
-    this.title = title;
-    this.viewdate = viewdate;
-    this.comment = comment;
-}
+
+// Filters
+cineApp.filter('dateFilter', function() {
+  var dateFilter = function(input) {
+    
+    return ('date: ' + input);
+  };
+  return dateFilter;
+});

@@ -31,6 +31,19 @@ exports.list = function(req, res){
 
 };
 
+exports.listJSON = function(req, res){
+	var idStart = req.param('id');
+
+	if (idStart == null || idStart < 0) {
+		idStart = 0;
+	}
+
+	MovieModel.find({}).sort({viewdate: -1}).limit(limit).skip(idStart).exec(function(err, result) { 
+		if (err) { throw err; }
+		res.send(result);
+	});
+};
+
 exports.viewAddMovie = function(req, res){
 	console.log('View Add movie');
 
