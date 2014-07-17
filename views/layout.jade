@@ -21,9 +21,13 @@ html(lang='fr', ng-app='cineApp')
 		script(src='/datepicker/js/bootstrap-datepicker.js')
 		script(src='/javascripts/ng-cineApp.js')
 
+	block link
+		- var selected = 'Liste';
+	- var menu = {'Liste': '/cinema', 'Ajouter un film': '/cinema/viewAdd', 'Ajouter un utilisateur': '/user/viewAdd' };
+
 	body
 		a(href='https://github.com/sfoubert')
-			img(style='position: fixed; top: 40px; right: 0; border: 0;', src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png', alt='Fork me on GitHub')
+			img(style='position: fixed; top: 40px; right: 0; border: 0;', src='/images/forkme.png', alt='Fork me on GitHub')
 
 		div.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
 			div.container
@@ -36,12 +40,13 @@ html(lang='fr', ng-app='cineApp')
 					a.navbar-brand(href='/') CinemaJS
 				div.collapse.navbar-collapse
 					ul.nav.navbar-nav
-						li.active
-							a(href='/cinema') Liste
-						li
-							a(href='/cinema/viewAdd') Ajouter un film
-						li
-							a(href='/user/viewAdd') Ajouter un utilisateur
+						each val, key in menu
+							if selected === key
+								li.active
+									a(href=val, title=key)= key
+							else
+								li
+									a(href=val, title=key)= key
 					ul.nav.navbar-nav.pull-right
 						li.divider-vertical
 						li.dropdown

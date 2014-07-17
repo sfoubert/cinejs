@@ -6,7 +6,7 @@ cineApp.config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-
+// Controller
 cineApp.controller('CinemaController', function($scope, $http, MovieFactory) {
   $scope.wait = "/images/wait.gif";
   $scope.movieFactory = new MovieFactory();
@@ -37,7 +37,7 @@ cineApp.factory('MovieFactory', function($http) {
     if (this.busy) return;
     this.busy = true;
 
-      $http.get('/cinema/listJSON/' + this.idStart/*, {cache: true}*/).success(function(data, status, headers, config) {
+      $http.get('/cinema/listJSON/' + this.idStart, {cache: true}).success(function(data, status, headers, config) {
         for (var i = 0; i < data.length; i++) {
           this.movies.push(data[i]);
         };
@@ -51,9 +51,9 @@ cineApp.factory('MovieFactory', function($http) {
 });
 
 // Filters
-cineApp.filter('dateFilter', function() {
+cineApp.filter('dateFilter', function($filter) {
     var dateFilter = function(input) {
-    return ('date: ' + input);
+    return $filter('date')(input, 'dd-MM-yyyy');
   };
   return dateFilter;
 });
