@@ -9,49 +9,15 @@ block content
 
 	div(ng-controller='CinemaController')
 
-		//- div.span12
-		//- 	ul.pagination
-		//- 		li
-		//- 			a(href='/cinema/list/0') Deb
-		//- 		li
-		//- 			a(href='/cinema/list/#{idStart - 20}') Prev
-		//- 		li
-		//- 			a(href='/cinema/list/0') 1
-		//- 		li
-		//- 			a(href='/cinema/list/20') 2
-		//- 		li 
-		//- 			a(href='#') ...
-		//- 		li
-		//- 			a(href='/cinema/list/60') 4
-		//- 		li
-		//- 			a(href='/cinema/list/80') 5
-		//- 		li
-		//- 			a(href='/cinema/list/#{idStart + 20}') Next
-		//- 		li
-		//- 			a(href='/cinema/list/#{(count /20) *20 }') Fin
 
-		div(infinite-scroll='loadMore()', infinite-scroll-disabled='infinite-scroll.busy', infinite-scroll-distance='0')
+		div(infinite-scroll='movieFactory.loadMore()', infinite-scroll-disabled='infinite-scroll.busy', infinite-scroll-distance='1')
 			table.table
 				tr
 					th Titre
 					th Date
 					th Imdb
 					th Actions
-				//- each movie in movies
-				//- 	tr.success
-				//- 		td #{movie.title}
-				//- 		td #{moment(movie.viewdate).format("DD-MMM-YYYY")}
-				//- 		td
-				//- 			div.btn-group
-				//- 				a.btn.clickMyModal(href='#myModal', role='button', data-toggle='modal', movie-title=movie.title)
-				//- 					i.glyphicon.glyphicon-search
-				//- 		td
-				//- 			div.btn-group
-				//- 				a(href='/cinema/viewUpdate/' + movie._id)
-				//- 					button.btn.btn-primary(type='button') Modifier
-				//- 				a(href='/cinema/delete/' + movie._id)
-				//- 					button.btn.btn-primary(type='button') Supprimer
-				tr.success(ng-repeat='movie in movies')
+				tr.success(ng-repeat='movie in movieFactory.movies')
 					td {{movie.title}}
 					td {{movie.viewdate | dateFilter}}
 					td

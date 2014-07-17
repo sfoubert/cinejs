@@ -7,23 +7,9 @@ cineApp.config(function($httpProvider){
 });
 
 
-cineApp.controller('CinemaController', function($scope, $http) {
+cineApp.controller('CinemaController', function($scope, $http, MovieFactory) {
   $scope.wait = "/images/wait.gif";
-  $scope.movies = [];
-  $scope.idStart = 0;
-
-
-  // infinite scroll
-  $scope.loadMore = function() {
-    console.log("loadMore ... " + $scope.movies.length);
-
-    $http.get('/cinema/listJSON/' + $scope.idStart/*, {cache: true}*/).success(function(data, status, headers, config) {
-      for (var i = 0; i < data.length; i++) {
-        $scope.movies.push(data[i]);
-      };
-      $scope.idStart = $scope.movies.length;
-    });
-  };
+  $scope.movieFactory = new MovieFactory();
 
   $scope.showMyModal = function() {
     console.log("show modal box");
@@ -38,10 +24,35 @@ cineApp.controller('CinemaController', function($scope, $http) {
 });
 
 
+// Factory
+cineApp.factory('MovieFactory', function($http) {
+
+  var MovieFactory = function() {
+    this.movies = [];
+    this.busy = false;
+    this.idStart = 0;
+  };
+
+  MovieFactory.prototype.loadMore = function() {
+    if (this.busy) return;
+    this.busy = true;
+
+      $http.get('/cinema/listJSON/' + this.idStart/*, {cache: true}*/).success(function(data, status, headers, config) {
+        for (var i = 0; i < data.length; i++) {
+          this.movies.push(data[i]);
+        };
+        this.idStart = this.movies.length;
+        this.busy = false;
+      }.bind(this));
+
+  };
+
+  return MovieFactory;
+});
+
 // Filters
 cineApp.filter('dateFilter', function() {
-  var dateFilter = function(input) {
-    
+    var dateFilter = function(input) {
     return ('date: ' + input);
   };
   return dateFilter;
