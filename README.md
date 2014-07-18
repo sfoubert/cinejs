@@ -16,7 +16,7 @@ Lancer le navigateur
  http://localhost:3000/cinema
 
 
- ## Mongo DB
+## Mongo DB
 ```sh
  D:\Java\mongodb\bin>mongo.exe
  use cinema
@@ -27,7 +27,7 @@ Lancer le navigateur
  db.getCollectionNames()
 ```
 
-  ## Commandes Git
+## Commandes Git
  ```sh
  $ git add .
  $ git rm -r --cached node_modules/
@@ -37,8 +37,17 @@ Lancer le navigateur
  $ git remote add origin https://github.com/sfoubert/cinejs.git
  $ git remote -v
  $ git push -u origin master
+
+## Heroku
+ $ heroku login
+ $ heroku keys:add
+ $ heroku git:remote -a cinejs
+ $ //git remote add heroku git@heroku.com:cinejs.git
+ $ heroku git:remote -a cinejs
+ $ git push -u heroku master
+ 
  ```
 
- ## License
+## License
 
 GPL
