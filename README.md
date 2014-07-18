@@ -16,7 +16,7 @@ Lancer le navigateur
  http://localhost:3000/cinema
 
 
-Mongo DB
+ ## Mongo DB
 ```sh
  D:\Java\mongodb\bin>mongo.exe
  use cinema
@@ -27,7 +27,7 @@ Mongo DB
  db.getCollectionNames()
 ```
 
- Commandes Git
+  ## Commandes Git
  ```sh
  $ git add .
  $ git rm -r --cached node_modules/
@@ -38,3 +38,7 @@ Mongo DB
  $ git remote -v
  $ git push -u origin master
  ```
+
+ ## License
+
+GPL
