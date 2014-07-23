@@ -41,10 +41,9 @@ Lancer le navigateur
 ## Heroku
  $ heroku login
  $ heroku keys:add
- $ heroku git:remote -a cinejs
  $ //git remote add heroku git@heroku.com:cinejs.git
  $ heroku git:remote -a cinejs
- $ git push -u heroku master
+ $ git push heroku master
  
  ```
 

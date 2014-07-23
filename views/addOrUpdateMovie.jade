@@ -29,7 +29,8 @@ block content
 					label Commentaire
 					textarea.form-control(rows="3", name='comment', type='text', placeholder='Commentaire') #{movie.comment}
 			div.btn-group
-				button.btn.btn-primary(type='submit') #{submit}
+				a(href='#')
+					button.btn.btn-primary(type='submit') #{submit}
 				a(href='/cinema')
 					button.btn.btn-primary(type='button') Annuler
 
