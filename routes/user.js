@@ -5,7 +5,6 @@ var mongoose = require('mongoose'),
 /*
  * GET users listing.
  */
-
 exports.list = function(req, res){
   res.send("respond with a resource");
 };
@@ -30,15 +29,16 @@ exports.postUser = function(req, res){
 exports.viewAddUser = function(req, res){
 	console.log('View Add user');
 
-	var user = new UserModel();
-	user.birthdate = moment();
+	var userModel = new UserModel();
+	userModel.birthdate = moment();
 
 	res.render('addOrUpdateUser', {
 		title: 'Ajouter un utilisateur',
 		action : 'post',
 		submit : 'Ajouter',
-		user : user,
-		moment: moment
+		userModel : userModel,
+		moment: moment,
+		user : req.user
 	});
 };
 
@@ -53,8 +53,9 @@ exports.viewUpdateUser = function(req, res){
 			title: 'Modifier un utilisateur',
 			action : 'update/' + req.params.id,
 			submit : 'Modifier',
-			user : result,
-			moment: moment
+			userAdded : result,
+			moment: moment,
+			user : req.user
 		});
 
 	});

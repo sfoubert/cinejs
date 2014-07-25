@@ -35,7 +35,8 @@ exports.show = function(req, res){
 	        	labels : JSON.stringify(labels),
 	        	data : JSON.stringify(data),
 	        	moment: moment,
-		      	currentYear: parseInt(moment().format("YYYY"))
+		      	currentYear: parseInt(moment().format("YYYY")),
+		      	user : req.user
 	        });
         }
       }

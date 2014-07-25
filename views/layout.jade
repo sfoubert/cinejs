@@ -22,8 +22,10 @@ html(lang='fr', ng-app='cineApp')
 		script(src='/javascripts/ng-cineApp.js')
 
 	block link
-		- var selected = 'Liste';
-	- var menu = {'Liste': '/cinema', 'Ajouter un film': '/cinema/viewAdd', 'Ajouter un utilisateur': '/user/viewAdd' };
+	- var selected = 'Liste';
+	- var menu = {}
+		if(user != null)
+			- menu = {'Liste': '/cinema', 'Ajouter un film': '/cinema/viewAdd', 'Ajouter un utilisateur': '/user/viewAdd' };
 
 	body
 		a(href='https://github.com/sfoubert')
@@ -47,15 +49,21 @@ html(lang='fr', ng-app='cineApp')
 							else
 								li
 									a(href=val, title=key)= key
-					ul.nav.navbar-nav.pull-right
-						li.divider-vertical
-						li.dropdown
-							a(href='#',data-toggle='dropdown').dropdown-toggle Graphiques
-								strong.caret
-							ul.dropdown-menu
-								li
-									a(href='/chart/show?view=year') Par an
-								li.divider
-								li
-									a(href='/chart/show?view=month') Par mois
+					if(user != null)
+						ul.nav.navbar-nav.pull-right
+							li.divider-vertical
+							li.dropdown
+								a(href='#',data-toggle='dropdown').dropdown-toggle Graphiques
+									strong.caret
+								ul.dropdown-menu
+									li
+										a(href='/chart/show?view=year') Par an
+									li.divider
+									li
+										a(href='/chart/show?view=month') Par mois
+							li.navbar-text #{user.displayName} 
+							li
+								img(src="#{user.photos[0].value}") 
+							li
+								a(href="/logout") (Se déconnecter)
 		block content

@@ -18,17 +18,17 @@ block content
 				legend Ajouter utilisateur
 				div.form-group
 					label Nom
-					input.form-control(name='name', type='text', placeholder='Nom', value=user.name)
+					input.form-control(name='name', type='text', placeholder='Nom', value=userModel.name)
 				div.form-group
 					label Prénom
-					input.form-control(name='firstname', type='text', placeholder='Prénom', value=user.firstname)
+					input.form-control(name='firstname', type='text', placeholder='Prénom', value=userModel.firstname)
 				div.form-group
 					label Email
-					input.form-control(name='email', type='text', placeholder='Email', value=user.email)
+					input.form-control(name='email', type='text', placeholder='Email', value=userModel.email)
 				div.form-group
 					label Date de naissance
-					div.input-append.date(id='birthdate', data-date=moment(user.birthdate).format("DD-MM-YYYY"), data-date-format='dd-mm-yyyy')
-						input.form-control.span2(name='birthdate', size='16', type='text', value=moment(user.birthdate).format("DD-MM-YYYY"))
+					div.input-append.date(id='birthdate', data-date=moment(userModel.birthdate).format("DD-MM-YYYY"), data-date-format='dd-mm-yyyy')
+						input.form-control.span2(name='birthdate', size='16', type='text', value=moment(userModel.birthdate).format("DD-MM-YYYY"))
 						span.add-on
 							span.glyphicon.glyphicon-calendar
 			div.btn-group

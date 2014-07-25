@@ -22,7 +22,8 @@ exports.list = function(req, res){
 		      	movies: result,
 		      	count: count,
 		      	moment: moment,
-		      	idStart: parseInt(idStart)
+		      	idStart: parseInt(idStart),
+		      	user : req.user
 		       });
 
 		})
@@ -55,7 +56,8 @@ exports.viewAddMovie = function(req, res){
 		action : 'post',
 		submit : 'Ajouter',
 		movie : movie,
-		moment: moment
+		moment: moment,
+		user : req.user
 	});
 };
 
@@ -71,7 +73,8 @@ exports.viewUpdateMovie = function(req, res){
 			action : 'update/' + req.params.id,
 			submit : 'Modifier',
 			movie : result,
-			moment: moment
+			moment: moment,
+			user : req.user
 		});
 
 	});

@@ -3,5 +3,9 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Cinema JS' });
+	console.log(JSON.stringify(req.user));
+  res.render('index', { 
+  	title: 'Cinema JS',
+  	user : req.user
+   });
 };

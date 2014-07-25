@@ -12,8 +12,8 @@ var express = require('express'),
    routes = require('./routes');
 
 
-var APP_ID = '857409657621319', 
-    APP_SECRET = '7c4ea0cdf6a313c3b42a65ee9f5fe292';
+var APP_ID = '[TO_CHANGE]', 
+    APP_SECRET = '[TO_CHANGE]';
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -33,7 +33,8 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
     clientID: APP_ID,
     clientSecret: APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    profileFields: ['id', 'displayName', 'photos']
   },
   function(accessToken, refreshToken, profile, done) {
     //asynchronous
@@ -44,14 +45,7 @@ passport.use(new FacebookStrategy({
       });*/
       console.log('accessToken : ' + accessToken);
       console.log('refreshToken : ' + refreshToken);
-      console.log('profile : ' + profile);
-      console.log('profile : ' + profile.id);
-      console.log('profile : ' + profile.provider);
-      console.log('profile : ' + profile.displayName);
-      console.log('profile : ' + profile.name.familyName);
-      console.log('profile : ' + profile.name.givenName);
-      console.log('profile : ' + profile.emails);
-      console.log('profile : ' + profile.photos);
+      console.log('profile : ' + JSON.stringify(profile));
 
       //user.setName("f");
       //user.setFirstname("seb");
