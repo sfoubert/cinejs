@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
     moment = require('moment'),
+    fb = require('./facebook'),
     MovieModel = mongoose.model('Movie');
 
 var limit = 20;
@@ -88,6 +89,11 @@ exports.postMovie = function(req, res){
 	movie.title = req.body.title;
 	movie.viewdate = viewdate;
 	movie.comment = req.body.comment;
+
+	// post message to fb
+	var message = req.user.displayName + " recommande " + req.body.title + "\n";
+	message += "from http://cinejs.herokuapp.com";
+	fb.postMessage(req.session.accessToken, message);
 
 	movie.save(function (e) {
 	    res.redirect('/cinema');

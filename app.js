@@ -34,9 +34,10 @@ passport.use(new FacebookStrategy({
     clientID: APP_ID,
     clientSecret: APP_SECRET,
     callbackURL: "http://localhost:3000/auth/facebook/callback",
+    passReqToCallback: true,
     profileFields: ['id', 'displayName', 'photos']
   },
-  function(accessToken, refreshToken, profile, done) {
+  function(req, accessToken, refreshToken, profile, done) {
     //asynchronous
     process.nextTick(function () {
   /*    User.findOrCreate(..., function(err, user) {
@@ -47,6 +48,8 @@ passport.use(new FacebookStrategy({
       console.log('refreshToken : ' + refreshToken);
       console.log('profile : ' + JSON.stringify(profile));
 
+      // add access token to session
+      req.session.accessToken = accessToken;
       //user.setName("f");
       //user.setFirstname("seb");
       done(null, profile);
@@ -127,7 +130,7 @@ app.get('/chart/show', chart.show);
 //   redirecting the user to facebook.com.  After authorization, Facebook will
 //   redirect the user back to this application at /auth/facebook/callback
 app.get('/auth/facebook',
-  passport.authenticate('facebook'),
+  passport.authenticate('facebook', { scope: ['user_about_me', 'user_photos', 'email', 'publish_stream', 'publish_actions']}),
   function(req, res){
     // The request will be redirected to Facebook for authentication, so this
     // function will not be called.
@@ -136,8 +139,7 @@ app.get('/auth/facebook',
 // GET /auth/facebook/callback
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function function will be called,
-//   which, in this example, will redirect the user to the home page.
+//   login page.  Otherwise, the primary route function function will be called.
 app.get('/auth/facebook/callback', 
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {

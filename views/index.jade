@@ -6,6 +6,7 @@ block content
 	.jumbotron
 		h1= title
 		p CinemaJS est une application permettant d'enregistrer vos entrées au cinéma, de générer vos statistiques, et partager vos goûts de cinéphile.
-		div(align="center")
-			a(href="/auth/facebook", role="button")
-				img(src="/images/login-with-facebook.png" width="154" height="22")
+		if(user == null)
+			div(align="center")
+				a(href="/auth/facebook", role="button")
+					img(src="/images/login-with-facebook.png" width="154" height="22")
