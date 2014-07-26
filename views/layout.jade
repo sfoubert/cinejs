@@ -65,5 +65,6 @@ html(lang='fr', ng-app='cineApp')
 							li
 								img(src="#{user.photos[0].value}") 
 							li
-								a(href="/logout") (Se déconnecter)
+								form.navbar-form.navbar-right(role="form")
+									a.btn.btn-primary(href="/logout") Se déconnecter
 		block content
