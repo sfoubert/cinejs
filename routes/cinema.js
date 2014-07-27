@@ -46,6 +46,14 @@ exports.listJSON = function(req, res){
 	});
 };
 
+
+exports.listLastRecommandationsJSON = function(req, res){
+	MovieModel.find({recommandation : true}).sort({viewdate: -1}).limit(30).exec(function(err, result) { 
+		if (err) { throw err; }
+		res.send(result);
+	});
+};
+
 exports.viewAddMovie = function(req, res){
 	console.log('View Add movie');
 
@@ -89,11 +97,15 @@ exports.postMovie = function(req, res){
 	movie.title = req.body.title;
 	movie.viewdate = viewdate;
 	movie.comment = req.body.comment;
+	movie.score = req.body.score;
+	movie.recommandation = req.body.recommandation;
 
 	// post message to fb
-	var message = req.user.displayName + " recommande " + req.body.title + "\n";
-	message += "from http://cinejs.herokuapp.com";
-	fb.postMessage(req.session.accessToken, message);
+	if (req.user!=null && req.body.recommandation == true) {
+		var message = req.user.displayName + " recommande " + req.body.title + "\n";
+		message += "from http://cinejs.herokuapp.com";
+		fb.postMessage(req.session.accessToken, message);
+	}
 
 	movie.save(function (e) {
 	    res.redirect('/cinema');
@@ -113,7 +125,15 @@ exports.updateMovie = function(req, res){
     console.log('Update movie : ' + req.params.id);
 	var viewdate = req.body.viewdate.substring(6,10) + '-' + req.body.viewdate.substring(3,5) + '-' + req.body.viewdate.substring(0,2);
 
-	MovieModel.update({_id : req.params.id}, {title : req.body.title, viewdate : viewdate, comment : req.body.comment}, function (e) {
+	MovieModel.update(
+		{_id : req.params.id}, 
+		{title : req.body.title, 
+			viewdate : viewdate, 
+			comment : req.body.comment,
+			score : req.body.score,
+			recommandation : req.body.recommandation
+		}, 
+		function (e) {
 	    res.redirect('/cinema');
 	  });
 }

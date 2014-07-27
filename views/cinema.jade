@@ -18,11 +18,13 @@ block content
 				tr
 					th Titre
 					th Date
+					th Score
 					th Imdb
 					th Actions
 				tr.success(ng-repeat='movie in movieFactory.movies')
 					td {{movie.title}}
 					td {{movie.viewdate | dateFilter}}
+					td {{movie.score | percentFilter }}
 					td
 						div.btn-group
 							a.btn.clickMyModal(href='#myModal', role='button', data-toggle='modal', movie-title='{{movie.title}}')

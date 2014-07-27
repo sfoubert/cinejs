@@ -7,6 +7,14 @@ Node JS Application for Cinema Management
   $ npm install
 ```
 
+Ne pas oublier dans le fichier app.js, les variables suivantes :
+```sh
+APP_ID
+APP_SECRET
+CALLBACK_URL
+MONGO_URL
+```
+
 Lancer serveur
 ```sh
   $ nodemon app.js

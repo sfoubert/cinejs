@@ -28,6 +28,12 @@ block content
 				div.form-group
 					label Commentaire
 					textarea.form-control(rows="3", name='comment', type='text', placeholder='Commentaire') #{movie.comment}
+				div.form-group
+					label Score (en pourcentage)
+					input.form-control(name='score', type='text', placeholder='80', value=movie.score)
+				div.form-group
+					label Recommandé
+					input.form-control(name='recommandation', type='checkbox', checked="checked", value=movie.recommandation)
 			div.btn-group
 				a(href='#')
 					button.btn.btn-primary(type='submit') #{submit}

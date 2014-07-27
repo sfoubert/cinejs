@@ -11,9 +11,28 @@ var express = require('express'),
    FacebookStrategy = require('passport-facebook').Strategy,
    routes = require('./routes');
 
+var APP_ID = '857409657621319', 
+    APP_SECRET = 'f0e2676354c6339c3ed39e33bf44de9c';
+var CALLBACK_URL = "http://localhost:3000/auth/facebook/callback";
+var MONGO_URL = 'mongodb://localhost:27017/test';//'mongodb://seb_fou:sebfou31@ds047438.mongolab.com:47438/cinema'
 
-var APP_ID = '[TO_CHANGE]', 
-    APP_SECRET = '[TO_CHANGE]';
+
+// Mongo Connection
+console.log('connexion DB');
+  mongoose.connect(MONGO_URL, function(err) {
+  if (err) { 
+    mongoose.connection.close();
+    throw err; 
+  }
+});
+
+// Bootstrap models
+var models_path = __dirname + '/models'
+fs.readdirSync(models_path).forEach(function (file) {
+  console.log('load module ' + models_path+'/'+file);
+    require(models_path+'/'+file)
+})
+
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -33,17 +52,19 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
     clientID: APP_ID,
     clientSecret: APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    callbackURL: CALLBACK_URL,
     passReqToCallback: true,
     profileFields: ['id', 'displayName', 'photos']
   },
   function(req, accessToken, refreshToken, profile, done) {
     //asynchronous
     process.nextTick(function () {
-  /*    User.findOrCreate(..., function(err, user) {
+      UserModel.findOne({email : profile.email}
+        , function(err, user) {
         if (err) { return done(err); }
         done(null, user);
-      });*/
+      });
+
       console.log('accessToken : ' + accessToken);
       console.log('refreshToken : ' + refreshToken);
       console.log('profile : ' + JSON.stringify(profile));
@@ -84,24 +105,6 @@ if ('development' == app.get('env')) {
 });
 }
 
-
-console.log('connexion DB');
-  //mongoose.connect('mongodb://seb_fou:sebfou31@ds047438.mongolab.com:47438/cinema', function(err) {
-  mongoose.connect('mongodb://localhost:27017/test', function(err) {
-  if (err) { 
-    mongoose.connection.close();
-    throw err; 
-  }
-});
-
-// Bootstrap models
-var models_path = __dirname + '/models'
-fs.readdirSync(models_path).forEach(function (file) {
-	console.log('load module ' + models_path+'/'+file);
-    require(models_path+'/'+file)
-})
-
-
 var user = require('./routes/user'),
 cinema = require('./routes/cinema'),
 chart = require('./routes/chart');
@@ -110,15 +113,16 @@ app.get('/', routes.index);
 app.get('/cinema', ensureAuthenticated, cinema.list);
 app.get('/cinema/list/:id', ensureAuthenticated, cinema.list);
 app.get('/cinema/listJSON/:id', ensureAuthenticated, cinema.listJSON);
+app.get('/cinema/listLastRecommandationsJSON', ensureAuthenticated, cinema.listLastRecommandationsJSON);
 app.get('/cinema/viewAdd', ensureAuthenticated, cinema.viewAddMovie);
 app.get('/cinema/viewUpdate/:id', ensureAuthenticated, cinema.viewUpdateMovie);
 app.post('/cinema/post',  ensureAuthenticated, cinema.postMovie);
 app.get('/cinema/delete/:id', ensureAuthenticated, cinema.deleteMovie);
 app.post('/cinema/update/:id', ensureAuthenticated, cinema.updateMovie);
-app.get('/user/viewAdd', ensureAuthenticated, user.viewAddUser);
-app.get('/user/viewUpdate/:id', ensureAuthenticated, user.viewUpdateUser);
 
 app.get('/user', user.list)
+app.get('/user/viewAdd', ensureAuthenticated, user.viewAddUser);
+app.get('/user/viewUpdate/:id', ensureAuthenticated, user.viewUpdateUser);
 app.post('/user/post',  user.postUser);
 
 app.get('/chart/show', chart.show);
@@ -158,8 +162,9 @@ app.get('/logout', function(req, res){
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/')
+  return next();
+/*  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/')*/
 }
 
 http.createServer(app).listen(app.get('port'), function(){

@@ -57,3 +57,11 @@ cineApp.filter('dateFilter', function($filter) {
   };
   return dateFilter;
 });
+
+cineApp.filter('percentFilter', function() {
+    var percentFilter = function(input) {
+      if(input == null || input == '') return '';
+      else return input + ' %';
+  };
+  return percentFilter;
+});
