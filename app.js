@@ -11,10 +11,10 @@ var express = require('express'),
    FacebookStrategy = require('passport-facebook').Strategy,
    routes = require('./routes');
 
-var APP_ID = '857409657621319', 
-    APP_SECRET = 'f0e2676354c6339c3ed39e33bf44de9c';
-var CALLBACK_URL = "http://localhost:3000/auth/facebook/callback";
-var MONGO_URL = 'mongodb://localhost:27017/test';//'mongodb://seb_fou:sebfou31@ds047438.mongolab.com:47438/cinema'
+var APP_ID = '[TO_CHANGE]', 
+    APP_SECRET = '[TO_CHANGE]';
+var CALLBACK_URL = "[TO_CHANGE]/auth/facebook/callback";
+var MONGO_URL = 'mongodb://[TO_CHANGE]';
 
 
 // Mongo Connection
@@ -57,23 +57,47 @@ passport.use(new FacebookStrategy({
     profileFields: ['id', 'displayName', 'photos']
   },
   function(req, accessToken, refreshToken, profile, done) {
+
+    console.log('accessToken : ' + accessToken);
+    console.log('refreshToken : ' + refreshToken);
+    console.log('profile : ' + JSON.stringify(profile));
+
+    // add access token to session
+    req.session.accessToken = accessToken;
+
     //asynchronous
     process.nextTick(function () {
+
+      // Recherche utilisateur existant en base, si non on le crée
       UserModel.findOne({email : profile.email}
         , function(err, user) {
-        if (err) { return done(err); }
-        done(null, user);
-      });
+            if (err) { return done(err); }
 
-      console.log('accessToken : ' + accessToken);
-      console.log('refreshToken : ' + refreshToken);
-      console.log('profile : ' + JSON.stringify(profile));
+            if(user != null) {
+              // met a jour l'heure connection
+              UserModel.update(
+                {_id : user._id}, 
+                { lastLogin : Date.now() }, 
+                function (e) {
+                  res.redirect('/');
+                });
+            } else {
 
-      // add access token to session
-      req.session.accessToken = accessToken;
-      //user.setName("f");
-      //user.setFirstname("seb");
-      done(null, profile);
+              user = new UserModel();
+              user.name = profile.name;
+              user.firstname = profile.firstname; // TODO
+              user.email = profile.email;
+              user.birthdate = birthdate;
+              user.lastLogin = Date.now();
+
+              user.save(function (e) {
+                  res.redirect('/');
+                });
+
+            }
+            done(null, user);
+          });
+
     });
   }
 ));

@@ -9,6 +9,7 @@ var UserSchema = new mongoose.Schema({
   firstname : String,
   email : {type : String, unique : true, required: true, match : emailRegexp},
   birthdate : { type : Date },
+  role : { type : String, 'enum': ['Guest', 'Admin']},
   createdOn : { type : Date, default: Date.now },
   lastLogin : { type : Date }
 },

@@ -27,7 +27,7 @@ block content
 					td {{movie.score | percentFilter }}
 					td
 						div.btn-group
-							a.btn.clickMyModal(href='#myModal', role='button', data-toggle='modal', movie-title='{{movie.title}}')
+							a.btn.clickMovieModal(href='#movieModal', role='button', data-toggle='modal', movie-title='{{movie.title}}')
 								i.glyphicon.glyphicon-search
 					td
 						div.btn-group
@@ -41,12 +41,12 @@ block content
 		div(ng-show='infinite-scroll.busy') Loading data...
 
 	// Modal
-	div#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+	div#movieModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='movieModalLabel', aria-hidden='true')
 		div.modal-dialog
 			div.modal-content
 				div.modal-header
 					button.close(type='button', data-dismiss='modal', aria-hidden='true') X
-					h3#myModalLabel Titre
+					h3#movieModalLabel
 				div.modal-body
 					p My movie details from IMDB
 					img#poster(src='/images/wait.gif')
@@ -56,9 +56,10 @@ block content
 	script.
 		$(document).ready(function() {
 
-			$('.clickMyModal').on('click', function () {
+			$(".clickMovieModal").on('click', function () {
 				$("#poster").attr("src","/images/wait.gif");
 				$('#movieTitle').val($(this).attr('movie-title'));
+				$('#movieModalLabel').html($(this).attr('movie-title'));
 				var param = "title=" + $('#movieTitle').val() + "&type=json&plot=simple&episode=1&limit=1&yg=0&mt=none&lang=en-US&offset=&aka=simple&release=simple&business=0&tech=0";
 				console.log('http://mymovieapi.com/?'+param);
 				$.getJSON('http://mymovieapi.com/?'+param, function(data) {
@@ -67,8 +68,4 @@ block content
 				});
 			});
 
-			$('#myModall').on('show', function () {
-
-				
-			});
 		});
