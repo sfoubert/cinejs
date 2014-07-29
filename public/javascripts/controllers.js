@@ -18,3 +18,19 @@ cineControllers.controller('CinemaController', function($scope, $http, MovieFact
   };
 
 });
+
+cineControllers.controller('IndexController', function($scope, $http) {
+  $scope.movies = [];
+
+  $scope.findLastRecommandations = function() {
+    $http.get('/cinema/listLastRecommandationsJSON').success(function(data) {
+        for (var i = 0; i < data.length; i++) {
+          $scope.movies.push(data[i]);
+        };
+    });
+  };
+
+  $scope.findLastRecommandations();
+  console.log('Nb recommandations : ' + $scope.movies.length);
+
+});

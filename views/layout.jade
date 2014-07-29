@@ -64,9 +64,9 @@ html(lang='fr', ng-app='cineApp')
 									li.divider
 									li
 										a(href='/chart/show?view=month') Par mois
-							li.navbar-text #{user.displayName} 
-							li
-								img(src="#{user.photos[0].value}") 
+							li.navbar-text #{user.firstname}  #{user.name}
+							li image
+								img(src="#{user.photo}") 
 							li
 								form.navbar-form.navbar-right(role="form")
 									a.btn.btn-primary(href="/logout") Se déconnecter

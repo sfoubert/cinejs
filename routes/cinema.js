@@ -48,7 +48,7 @@ exports.listJSON = function(req, res){
 
 
 exports.listLastRecommandationsJSON = function(req, res){
-	MovieModel.find({recommandation : true}).sort({viewdate: -1}).limit(30).exec(function(err, result) { 
+	MovieModel.find({recommandation : true}).sort({viewdate: -1}).limit(30).populate('user').exec(function(err, result) { 
 		if (err) { throw err; }
 		res.send(result);
 	});
@@ -99,10 +99,13 @@ exports.postMovie = function(req, res){
 	movie.comment = req.body.comment;
 	movie.score = req.body.score;
 	movie.recommandation = req.body.recommandation;
+	if (req.user!=null) {
+		movie.user = req.user._id;
+	}
 
 	// post message to fb
-	if (req.user!=null && req.body.recommandation == true) {
-		var message = req.user.displayName + " recommande " + req.body.title + "\n";
+	if (req.user!=null && req.body.recommandation == 'on') {
+		var message = req.user.firstname + ' ' +  req.user.name + " recommande " + req.body.title + "\n";
 		message += "from http://cinejs.herokuapp.com";
 		fb.postMessage(req.session.accessToken, message);
 	}

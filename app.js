@@ -16,7 +16,6 @@ var APP_ID = '[TO_CHANGE]',
 var CALLBACK_URL = "[TO_CHANGE]/auth/facebook/callback";
 var MONGO_URL = 'mongodb://[TO_CHANGE]';
 
-
 // Mongo Connection
 console.log('connexion DB');
   mongoose.connect(MONGO_URL, function(err) {
@@ -33,6 +32,7 @@ fs.readdirSync(models_path).forEach(function (file) {
     require(models_path+'/'+file)
 })
 
+var UserModel = mongoose.model('User');
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -54,7 +54,7 @@ passport.use(new FacebookStrategy({
     clientSecret: APP_SECRET,
     callbackURL: CALLBACK_URL,
     passReqToCallback: true,
-    profileFields: ['id', 'displayName', 'photos']
+    profileFields: ['id', 'first_name', 'last_name', 'gender', 'birthday', 'photos', 'email']
   },
   function(req, accessToken, refreshToken, profile, done) {
 
@@ -68,30 +68,44 @@ passport.use(new FacebookStrategy({
     //asynchronous
     process.nextTick(function () {
 
+      var email = profile.emails[0].value;
       // Recherche utilisateur existant en base, si non on le crée
-      UserModel.findOne({email : profile.email}
+      UserModel.findOne({email : email}
         , function(err, user) {
             if (err) { return done(err); }
 
+            
             if(user != null) {
               // met a jour l'heure connection
               UserModel.update(
                 {_id : user._id}, 
-                { lastLogin : Date.now() }, 
-                function (e) {
-                  res.redirect('/');
+                { 
+                  lastLogin : Date.now(),
+                  name : profile.name.familyName,
+                  firstname : profile.name.givenName,
+                  gender : profile.gender,
+                  photo : profile.photos[0].value,
+                  //birthday : profile.birthday
+                 }, 
+                function (err) {
+                  if (err) { return done(err); }
+                  console.log("User updated");
                 });
             } else {
 
               user = new UserModel();
-              user.name = profile.name;
-              user.firstname = profile.firstname; // TODO
-              user.email = profile.email;
-              user.birthdate = birthdate;
+              user.name = profile.name.familyName;
+              user.firstname = profile.name.givenName;
+              user.gender = profile.gender;
+              user.email = email;
+              user.photo = profile.photos[0].value;
+              //user.birthday = profile.birthday;
               user.lastLogin = Date.now();
 
-              user.save(function (e) {
-                  res.redirect('/');
+              console.log("Save user " + user);
+              user.save(function (err) {
+                if (err) { return done(err); }
+                  console.log("User created : " + user.email);
                 });
 
             }
@@ -137,7 +151,7 @@ app.get('/', routes.index);
 app.get('/cinema', ensureAuthenticated, cinema.list);
 app.get('/cinema/list/:id', ensureAuthenticated, cinema.list);
 app.get('/cinema/listJSON/:id', ensureAuthenticated, cinema.listJSON);
-app.get('/cinema/listLastRecommandationsJSON', ensureAuthenticated, cinema.listLastRecommandationsJSON);
+app.get('/cinema/listLastRecommandationsJSON', cinema.listLastRecommandationsJSON);
 app.get('/cinema/viewAdd', ensureAuthenticated, cinema.viewAddMovie);
 app.get('/cinema/viewUpdate/:id', ensureAuthenticated, cinema.viewUpdateMovie);
 app.post('/cinema/post',  ensureAuthenticated, cinema.postMovie);
@@ -186,9 +200,8 @@ app.get('/logout', function(req, res){
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
 function ensureAuthenticated(req, res, next) {
-  return next();
-/*  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/')*/
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/')
 }
 
 http.createServer(app).listen(app.get('port'), function(){

@@ -19,7 +19,7 @@ exports.postUser = function(req, res){
 	user.email = req.body.email;
 	user.birthdate = birthdate;
 
-	user.save(function (e) {
+	user.save(function (err) {
 	    res.redirect('/user');
 	  });
     
