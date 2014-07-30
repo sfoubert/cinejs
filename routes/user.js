@@ -5,8 +5,25 @@ var mongoose = require('mongoose'),
 /*
  * GET users listing.
  */
-exports.list = function(req, res){
-  res.send("respond with a resource");
+exports.listJSON = function(req, res){
+	UserModel.find({}).exec(function(err, result) { 
+		if (err) { throw err; }
+		res.send(result);
+	});
+};
+
+exports.viewDetails = function(req, res){
+	console.log('View Details user : ' + req.params.id);
+
+	UserModel.findById(req.params.id, function(err, result) { 
+	  if (err) { throw err; }
+
+		res.render('userDetails', {
+			title : 'Informations',
+			user : result
+		});
+
+	});
 };
 
 exports.postUser = function(req, res){ 

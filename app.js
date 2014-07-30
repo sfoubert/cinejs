@@ -144,23 +144,24 @@ if ('development' == app.get('env')) {
 }
 
 var user = require('./routes/user'),
-cinema = require('./routes/cinema'),
+entry = require('./routes/entry'),
 chart = require('./routes/chart');
 
 app.get('/', routes.index);
-app.get('/cinema', ensureAuthenticated, cinema.list);
-app.get('/cinema/list/:id', ensureAuthenticated, cinema.list);
-app.get('/cinema/listJSON/:id', ensureAuthenticated, cinema.listJSON);
-app.get('/cinema/listLastRecommandationsJSON', cinema.listLastRecommandationsJSON);
-app.get('/cinema/viewAdd', ensureAuthenticated, cinema.viewAddMovie);
-app.get('/cinema/viewUpdate/:id', ensureAuthenticated, cinema.viewUpdateMovie);
-app.post('/cinema/post',  ensureAuthenticated, cinema.postMovie);
-app.get('/cinema/delete/:id', ensureAuthenticated, cinema.deleteMovie);
-app.post('/cinema/update/:id', ensureAuthenticated, cinema.updateMovie);
+app.get('/entry', ensureAuthenticated, entry.list);
+app.get('/entry/list/:id', ensureAuthenticated, entry.list);
+app.get('/entry/listJSON/:id', ensureAuthenticated, entry.listJSON);
+app.get('/entry/listLastRecommandationsJSON', entry.listLastRecommandationsJSON);
+app.get('/entry/viewAdd', ensureAuthenticated, entry.viewAddMovie);
+app.get('/entry/viewUpdate/:id', ensureAuthenticated, entry.viewUpdateMovie);
+app.post('/entry/post',  ensureAuthenticated, entry.postMovie);
+app.get('/entry/delete/:id', ensureAuthenticated, entry.deleteMovie);
+app.post('/entry/update/:id', ensureAuthenticated, entry.updateMovie);
 
-app.get('/user', user.list)
+app.get('/user/listJSON', user.listJSON)
 app.get('/user/viewAdd', ensureAuthenticated, user.viewAddUser);
 app.get('/user/viewUpdate/:id', ensureAuthenticated, user.viewUpdateUser);
+app.get('/user/view/:id', ensureAuthenticated, user.viewDetails);
 app.post('/user/post',  user.postUser);
 
 app.get('/chart/show', chart.show);
@@ -200,8 +201,9 @@ app.get('/logout', function(req, res){
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/')
+/*  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/')*/
+  return next();
 }
 
 http.createServer(app).listen(app.get('port'), function(){

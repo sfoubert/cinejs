@@ -1,7 +1,7 @@
 
 var mongoose = require('mongoose'),
 	moment = require('moment'),
-    MovieModel = mongoose.model('Movie');
+    EntryModel = mongoose.model('Entry');
 
 exports.show = function(req, res){
 	console.log('Show chart by ' + req.query.view);
@@ -56,7 +56,7 @@ exports.show = function(req, res){
 	  },
 	  ...]
 	  */
-		MovieModel.aggregate(
+		EntryModel.aggregate(
 			  { $match: { viewdate: { $exists: true,  $gte: new Date(year + '-01-01'), $lt: new Date((parseInt(year) + 1) + '-01-01') } } },
 		      { $group : { 
 		           _id : { year: { $year : "$viewdate" }, month: { $month : "$viewdate" }}, 
@@ -67,7 +67,7 @@ exports.show = function(req, res){
 		);
 
 	}else if(req.query.view == 'year') {
-		MovieModel.aggregate(
+		EntryModel.aggregate(
 			  { $match: { viewdate: { $exists: true } } },
 		      { $group : { 
 		           _id : { year: { $year : "$viewdate" } }, 

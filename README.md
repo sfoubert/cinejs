@@ -21,7 +21,7 @@ Lancer serveur
 ```
 
 Lancer le navigateur
- http://localhost:3000/cinema
+ http://localhost:3000/
 
 
 ## Mongo DB

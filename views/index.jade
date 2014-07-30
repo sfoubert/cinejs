@@ -5,15 +5,15 @@ block content
 	p
 	.jumbotron
 		h1= title
-		p CinemaJS est une application permettant d'enregistrer vos entrées au cinéma, de générer vos statistiques, et partager vos goûts de cinéphile.
+		p CinemaJS est une application permettant d'enregistrer vos entrées au cinéma, de générer vos statistiques, et partager vos recommandations.
 		if(user == null)
 			div(align="center")
 				a(href="/auth/facebook", role="button")
 					img(src="/images/login-with-facebook.png")
 
 	div(ng-controller='IndexController')
-		p Les dernières recommandations
+		p Les {{entries.length}} dernières recommandations
 		ul
-		li(ng-repeat='movie in movies' ng-hide='movie.user == null') 
-			img(ng-src="{{movie.user.photo}}")
-			{{movie.user.firstname}} {{movie.user.name}} recommande {{movie.title}} à {{movie.score | percentFilter}}
+			li(ng-repeat='entry in entries')
+				a(href="/user/view/{{entry.user.id}}") {{entry.user.firstname}} {{entry.user.name}} recommande {{entry.title}} à {{entry.score | percentFilter}}
+					img(ng-src="{{entry.user.photo}}")

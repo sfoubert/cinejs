@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     moment = require('moment'),
     fb = require('./facebook'),
+    EntryModel = mongoose.model('Entry'),
     MovieModel = mongoose.model('Movie');
 
 var limit = 20;
@@ -11,11 +12,11 @@ exports.list = function(req, res){
 	if (idStart == null || idStart < 0) {
 		idStart = 0;
 	}
-
-	MovieModel.find({}).sort({viewdate: -1}).limit(limit).skip(idStart).exec(function(err, result) { 
+	//TODO filter sur le User
+	EntryModel.find({}).sort({viewdate: -1}).limit(limit).skip(idStart).populate('movie').exec(function(err, result) { 
 	  if (err) { throw err; }
 
-		MovieModel.count({}, function(err, count){
+		EntryModel.count({}, function(err, count){
 		    console.log( "Number of movies:", count);
 
 		      res.render('cinema', { 
@@ -40,7 +41,8 @@ exports.listJSON = function(req, res){
 		idStart = 0;
 	}
 
-	MovieModel.find({}).sort({viewdate: -1}).limit(limit).skip(idStart).exec(function(err, result) { 
+	//TODO filter sur le User
+	EntryModel.find({}).sort({viewdate: -1}).limit(limit).skip(idStart).populate('movie').exec(function(err, result) { 
 		if (err) { throw err; }
 		res.send(result);
 	});
@@ -48,7 +50,7 @@ exports.listJSON = function(req, res){
 
 
 exports.listLastRecommandationsJSON = function(req, res){
-	MovieModel.find({recommandation : true}).sort({viewdate: -1}).limit(30).populate('user').exec(function(err, result) { 
+	EntryModel.find({recommandation : true}).sort({viewdate: -1}).limit(30).populate('movie user').exec(function(err, result) { 
 		if (err) { throw err; }
 		res.send(result);
 	});
@@ -57,14 +59,14 @@ exports.listLastRecommandationsJSON = function(req, res){
 exports.viewAddMovie = function(req, res){
 	console.log('View Add movie');
 
-	var movie = new MovieModel();
-	movie.viewdate = moment();
+	var entry = new EntryModel();
+	entry.viewdate = moment();
 
 	res.render('addOrUpdateMovie', {
 		title: 'Ajouter un film',
 		action : 'post',
 		submit : 'Ajouter',
-		movie : movie,
+		entry : entry,
 		moment: moment,
 		user : req.user
 	});
@@ -74,33 +76,40 @@ exports.viewUpdateMovie = function(req, res){
 
 	console.log('View Update movie : ' + req.params.id);
 
-	MovieModel.findById(req.params.id, function(err, result) { 
+	EntryModel.findById(req.params.id, function(err, entry) { 
 	  if (err) { throw err; }
 
 		res.render('addOrUpdateMovie', {
 			title: 'Modifier un film',
 			action : 'update/' + req.params.id,
 			submit : 'Modifier',
-			movie : result,
+			entry : entry,
+			movieTitle : (entry.movie != null) ? entry.movie.title : '',
 			moment: moment,
 			user : req.user
 		});
 
-	});
+	}).populate('movie');
 };
 
 exports.postMovie = function(req, res){ 
     console.log('Post movie : ' + req.body);
   	var viewdate = req.body.viewdate.substring(6,10) + '-' + req.body.viewdate.substring(3,5) + '-' + req.body.viewdate.substring(0,2);
 
-	var movie = new MovieModel();
+	var movie = new MovieModel();  	
 	movie.title = req.body.title;
-	movie.viewdate = viewdate;
-	movie.comment = req.body.comment;
-	movie.score = req.body.score;
-	movie.recommandation = req.body.recommandation;
+	movie.save();
+
+	var entry = new EntryModel();
+	if (movie!=null) {
+		entry.movie = movie._id;
+	}
+	entry.viewdate = viewdate;
+	entry.comment = req.body.comment;
+	entry.score = req.body.score;
+	entry.recommandation = req.body.recommandation;
 	if (req.user!=null) {
-		movie.user = req.user._id;
+		entry.user = req.user._id;
 	}
 
 	// post message to fb
@@ -110,8 +119,8 @@ exports.postMovie = function(req, res){
 		fb.postMessage(req.session.accessToken, message);
 	}
 
-	movie.save(function (e) {
-	    res.redirect('/cinema');
+	entry.save(function (e) {
+	    res.redirect('/entry');
 	  });
     
 }
@@ -119,8 +128,8 @@ exports.postMovie = function(req, res){
 exports.deleteMovie = function(req, res){ 
     console.log('Delete movie : ' + req.params.id);
 
-	MovieModel.remove({_id : req.params.id}, function (e) {
-	    res.redirect('/cinema');
+	EntryModel.remove({_id : req.params.id}, function (e) {
+	    res.redirect('/entry');
 	  });
 }
 
@@ -128,15 +137,38 @@ exports.updateMovie = function(req, res){
     console.log('Update movie : ' + req.params.id);
 	var viewdate = req.body.viewdate.substring(6,10) + '-' + req.body.viewdate.substring(3,5) + '-' + req.body.viewdate.substring(0,2);
 
-	MovieModel.update(
-		{_id : req.params.id}, 
-		{title : req.body.title, 
-			viewdate : viewdate, 
-			comment : req.body.comment,
-			score : req.body.score,
-			recommandation : req.body.recommandation
-		}, 
-		function (e) {
-	    res.redirect('/cinema');
-	  });
+	EntryModel.findById(req.params.id, function(err, entry){
+		if(err) {
+			console.log(err);
+			res.redirect('/entry');
+		} else {
+			// Update movie
+			MovieModel.update(
+				{_id : entry.movie._id}, 
+				{	title : req.body.title
+				}, 
+				function (err) {
+					if(err) { 
+						console.log(err);
+						res.redirect('/entry');
+					} else {
+						// Update entry
+						EntryModel.update(
+							{_id : req.params.id}, 
+							{	viewdate : viewdate, 
+								comment : req.body.comment,
+								score : req.body.score,
+								recommandation : req.body.recommandation
+							}, 
+							function (err) {
+								if(err) console.log(err);
+						    	res.redirect('/entry');
+						  });
+					}
+
+			  });
+
+		}
+	}).populate('movie');
+
 }
