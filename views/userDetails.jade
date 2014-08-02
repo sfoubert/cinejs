@@ -5,4 +5,9 @@ block content
 
 	p #{user.firstname} #{user.name}
 	br
-	img(src="#{user.photos}")
+	img(src="#{user.photo}")
+	br
+	p Dernière connexion : #{moment(user.lastLogin).format("DD-MM-YYYY HH:mm:ss")}
+
+	a(href='#')
+		button.btn.btn-primary(type='submit') Faire une proposition

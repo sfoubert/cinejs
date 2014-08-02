@@ -8,12 +8,18 @@ var limit = 20;
 
 exports.list = function(req, res){
 	var idStart = req.param('id');
+	var userId = req.param('userId');
 
 	if (idStart == null || idStart < 0) {
 		idStart = 0;
 	}
-	//TODO filter sur le User
-	EntryModel.find({}).sort({viewdate: -1}).limit(limit).skip(idStart).populate('movie').exec(function(err, result) { 
+
+	if(userId == null){
+		userId  = req.user._id;
+	}
+
+	//console.log('user id : ' + req.user._id);
+	EntryModel.find({user: userId}).sort({viewdate: -1}).limit(limit).skip(idStart).populate('movie').exec(function(err, result) { 
 	  if (err) { throw err; }
 
 		EntryModel.count({}, function(err, count){
@@ -36,13 +42,17 @@ exports.list = function(req, res){
 
 exports.listJSON = function(req, res){
 	var idStart = req.param('id');
+	var userId = req.param('userId');
 
 	if (idStart == null || idStart < 0) {
 		idStart = 0;
 	}
 
-	//TODO filter sur le User
-	EntryModel.find({}).sort({viewdate: -1}).limit(limit).skip(idStart).populate('movie').exec(function(err, result) { 
+	if(userId == null){
+		userId  = req.user._id;
+	}
+
+	EntryModel.find({user: userId}).sort({viewdate: -1}).limit(limit).skip(idStart).populate('movie').exec(function(err, result) { 
 		if (err) { throw err; }
 		res.send(result);
 	});

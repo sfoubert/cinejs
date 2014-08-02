@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 exports.show = function(req, res){
 	console.log('Show chart by ' + req.query.view);
+
 	var year = req.query.year;
 	//annee courante par défaut
 	if(year == null) year = moment().format("YYYY");
@@ -57,7 +58,9 @@ exports.show = function(req, res){
 	  ...]
 	  */
 		EntryModel.aggregate(
-			  { $match: { viewdate: { $exists: true,  $gte: new Date(year + '-01-01'), $lt: new Date((parseInt(year) + 1) + '-01-01') } } },
+			  { $match: { /*user : req.user._id,*/
+			  	          viewdate: { $exists: true,  $gte: new Date(year + '-01-01'), $lt: new Date((parseInt(year) + 1) + '-01-01') } } 
+			  },
 		      { $group : { 
 		           _id : { year: { $year : "$viewdate" }, month: { $month : "$viewdate" }}, 
 		           count : { $sum : 1 }}
@@ -68,7 +71,9 @@ exports.show = function(req, res){
 
 	}else if(req.query.view == 'year') {
 		EntryModel.aggregate(
-			  { $match: { viewdate: { $exists: true } } },
+			  { $match: { /*user : req.user._id,*/
+			  	          viewdate: { $exists: true } } 
+			  },
 		      { $group : { 
 		           _id : { year: { $year : "$viewdate" } }, 
 		           count : { $sum : 1 }}

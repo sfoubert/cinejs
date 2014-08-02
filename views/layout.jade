@@ -28,7 +28,7 @@ html(lang='fr', ng-app='cineApp')
 	- var selected = 'Liste';
 	- var menu = {}
 		if(user != null)
-			- menu = {'Liste': '/entry', 'Ajouter un film': '/entry/viewAdd', 'Ajouter un utilisateur': '/user/viewAdd' };
+			- menu = {'Liste': '/entry', 'Ajouter un film': '/entry/viewAdd' };
 
 	body
 		a(href='https://github.com/sfoubert')
@@ -64,7 +64,7 @@ html(lang='fr', ng-app='cineApp')
 									li.divider
 									li
 										a(href='/chart/show?view=month') Par mois
-							li.navbar-text #{user.firstname}  #{user.name}
+							li.navbar-text #{user.firstname} #{user.name}
 							li image
 								img(src="#{user.photo}") 
 							li

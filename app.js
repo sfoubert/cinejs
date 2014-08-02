@@ -16,6 +16,7 @@ var APP_ID = '[TO_CHANGE]',
 var CALLBACK_URL = "[TO_CHANGE]/auth/facebook/callback";
 var MONGO_URL = 'mongodb://[TO_CHANGE]';
 
+
 // Mongo Connection
 console.log('connexion DB');
   mongoose.connect(MONGO_URL, function(err) {
@@ -151,6 +152,8 @@ app.get('/', routes.index);
 app.get('/entry', ensureAuthenticated, entry.list);
 app.get('/entry/list/:id', ensureAuthenticated, entry.list);
 app.get('/entry/listJSON/:id', ensureAuthenticated, entry.listJSON);
+app.get('/entry/user/:userId/list/:id', ensureAuthenticated, entry.list);
+app.get('/entry/user/:userId/listJSON/:id', ensureAuthenticated, entry.listJSON);
 app.get('/entry/listLastRecommandationsJSON', entry.listLastRecommandationsJSON);
 app.get('/entry/viewAdd', ensureAuthenticated, entry.viewAddMovie);
 app.get('/entry/viewUpdate/:id', ensureAuthenticated, entry.viewUpdateMovie);
@@ -201,9 +204,8 @@ app.get('/logout', function(req, res){
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
 function ensureAuthenticated(req, res, next) {
-/*  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/')*/
-  return next();
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
 }
 
 http.createServer(app).listen(app.get('port'), function(){

@@ -20,7 +20,8 @@ exports.viewDetails = function(req, res){
 
 		res.render('userDetails', {
 			title : 'Informations',
-			user : result
+			user : result,
+			moment: moment
 		});
 
 	});

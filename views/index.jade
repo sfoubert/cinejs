@@ -15,5 +15,8 @@ block content
 		p Les {{entries.length}} dernières recommandations
 		ul
 			li(ng-repeat='entry in entries')
-				a(href="/user/view/{{entry.user.id}}") {{entry.user.firstname}} {{entry.user.name}} recommande {{entry.title}} à {{entry.score | percentFilter}}
+				a(href="/user/view/{{entry.user._id}}")
 					img(ng-src="{{entry.user.photo}}")
+					span {{entry.user.firstname}} {{entry.user.name}}
+				span &nbsp;recommande {{entry.movie.title}} 
+				span &nbsp;à {{entry.score | percentFilter}}

@@ -11,7 +11,7 @@ var UserSchema = new mongoose.Schema({
   email : {type : String, unique : true, required: true, match : emailRegexp},
   birthday : { type : Date },
   photo : String,
-  role : { type : String, 'enum': ['Guest', 'Admin']},
+  role : { type : String, 'enum': ['guest', 'admin'], default : 'guest'},
   createdOn : { type : Date, default: Date.now },
   lastLogin : { type : Date }
 },
