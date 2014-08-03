@@ -11,16 +11,12 @@ var express = require('express'),
    FacebookStrategy = require('passport-facebook').Strategy,
    routes = require('./routes');
 
-var APP_ID = '857409657621319', 
-    APP_SECRET = 'f0e2676354c6339c3ed39e33bf44de9c';
-var CALLBACK_URL = "http://cinejs.herokuapp.com/auth/facebook/callback";
-var MONGO_URL = 'mongodb://seb_fou:sebfou31@ds047438.mongolab.com:47438/cinema';//'mongodb://localhost:27017/test';
 
-/*var APP_ID = '[TO_CHANGE]', 
+var APP_ID = '[TO_CHANGE]', 
     APP_SECRET = '[TO_CHANGE]';
 var CALLBACK_URL = "[TO_CHANGE]/auth/facebook/callback";
 var MONGO_URL = 'mongodb://[TO_CHANGE]';
-*/
+
 
 // Mongo Connection
 console.log('connexion DB');
