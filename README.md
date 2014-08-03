@@ -52,6 +52,7 @@ Lancer le navigateur
  $ //git remote add heroku git@heroku.com:cinejs.git
  $ heroku git:remote -a cinejs
  $ git push heroku master
+ $ git reset --soft HEAD~1
  
  ```
 

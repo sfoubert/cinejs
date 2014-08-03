@@ -56,7 +56,7 @@ exports.show = function(req, res){
 	    "count" : 6
 	  },
 	  ...]
-	  */
+	  */console.log("seb" +req.user._id);
 		EntryModel.aggregate(
 			  { $match: { /*user : req.user._id,*/
 			  	          viewdate: { $exists: true,  $gte: new Date(year + '-01-01'), $lt: new Date((parseInt(year) + 1) + '-01-01') } } 

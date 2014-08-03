@@ -25,10 +25,9 @@ html(lang='fr', ng-app='cineApp')
 		script(src='/javascripts/filters.js')
 
 	block link
-	- var selected = 'Liste';
 	- var menu = {}
 		if(user != null)
-			- menu = {'Liste': '/entry', 'Ajouter un film': '/entry/viewAdd' };
+			- menu = {'Liste': '/entry', 'Ajouter un film': '/entry/viewAdd' , 'Mes propositions': '/proposal' };
 
 	body
 		a(href='https://github.com/sfoubert')

@@ -3,11 +3,25 @@ extends layout
 block content
 	h1= title
 
-	p #{user.firstname} #{user.name}
+	p #{user.displayName}
 	br
 	img(src="#{user.photo}")
 	br
 	p Dernière connexion : #{moment(user.lastLogin).format("DD-MM-YYYY HH:mm:ss")}
 
-	a(href='#')
-		button.btn.btn-primary(type='submit') Faire une proposition
+	div(ng-controller='UserController')
+		p Les {{entries.length}} dernières recommandations
+		ul
+			li(ng-repeat='entry in entries')
+				a(href="/user/view/{{entry.user._id}}")
+					img(ng-src="{{entry.user.photo}}")
+					span {{entry.user.firstname}} {{entry.user.name}}
+				span &nbsp;recommande {{entry.movie.title}} 
+				span &nbsp;à {{entry.score | percentFilter}}
+
+	.btn-group
+		a(href='/proposal/viewAdd')
+			button.btn.btn-primary Faire une proposition
+
+		//- a(href='/entry')
+		//- 	button.btn.btn-primary Liste des films

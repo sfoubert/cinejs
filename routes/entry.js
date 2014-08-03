@@ -25,7 +25,7 @@ exports.list = function(req, res){
 		EntryModel.count({}, function(err, count){
 		    console.log( "Number of movies:", count);
 
-		      res.render('cinema', { 
+		      res.render('entry', { 
 		      	title: 'Liste des films',
 		      	movies: result,
 		      	count: count,
@@ -61,6 +61,13 @@ exports.listJSON = function(req, res){
 
 exports.listLastRecommandationsJSON = function(req, res){
 	EntryModel.find({recommandation : true}).sort({viewdate: -1}).limit(30).populate('movie user').exec(function(err, result) { 
+		if (err) { throw err; }
+		res.send(result);
+	});
+};
+
+exports.listUserLastRecommandationsJSON = function(req, res){
+	EntryModel.find({user : req.user._id, recommandation : true}).sort({viewdate: -1}).limit(30).populate('movie user').exec(function(err, result) { 
 		if (err) { throw err; }
 		res.send(result);
 	});

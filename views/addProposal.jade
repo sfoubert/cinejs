@@ -1,0 +1,28 @@
+extends layout
+
+block link
+	- var selected = 'Mes propositions';
+	
+block content
+	h1= title
+
+	div.span12
+
+		form(action='/proposal/add', method='POST', role='form')
+			fieldset
+				legend Mon film
+				div.form-group
+					label Film
+					input.form-control(name='movie', type='text', placeholder='Film')
+				div.form-group
+					label Utilisateur
+					p #{user.firstname} #{user.name}
+				div.form-group
+					label Invité
+					input.form-control(name='receivers', type='text')
+			div.btn-group
+				a(href='#')
+					button.btn.btn-primary(type='submit') Proposer
+				a(href='/proposal')
+					button.btn.btn-primary(type='button') Annuler
+
