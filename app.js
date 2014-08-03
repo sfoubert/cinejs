@@ -13,7 +13,7 @@ var express = require('express'),
 
 var APP_ID = '857409657621319', 
     APP_SECRET = 'f0e2676354c6339c3ed39e33bf44de9c';
-var CALLBACK_URL = "http://localhost:3000/auth/facebook/callback";
+var CALLBACK_URL = "http://cinejs.herokuapp.com/auth/facebook/callback";
 var MONGO_URL = 'mongodb://seb_fou:sebfou31@ds047438.mongolab.com:47438/cinema';//'mongodb://localhost:27017/test';
 
 /*var APP_ID = '[TO_CHANGE]', 
