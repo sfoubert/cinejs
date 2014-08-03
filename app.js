@@ -11,11 +11,16 @@ var express = require('express'),
    FacebookStrategy = require('passport-facebook').Strategy,
    routes = require('./routes');
 
-var APP_ID = '[TO_CHANGE]', 
+var APP_ID = '857409657621319', 
+    APP_SECRET = 'f0e2676354c6339c3ed39e33bf44de9c';
+var CALLBACK_URL = "http://localhost:3000/auth/facebook/callback";
+var MONGO_URL = 'mongodb://seb_fou:sebfou31@ds047438.mongolab.com:47438/cinema';
+
+/*var APP_ID = '[TO_CHANGE]', 
     APP_SECRET = '[TO_CHANGE]';
 var CALLBACK_URL = "[TO_CHANGE]/auth/facebook/callback";
 var MONGO_URL = 'mongodb://[TO_CHANGE]';
-
+*/
 
 // Mongo Connection
 console.log('connexion DB');
@@ -30,7 +35,7 @@ console.log('connexion DB');
 var models_path = __dirname + '/models'
 fs.readdirSync(models_path).forEach(function (file) {
   console.log('load module ' + models_path+'/'+file);
-    require(models_path+'/'+file)
+    require(models_path+'/'+file);
 })
 
 var UserModel = mongoose.model('User');
@@ -138,36 +143,45 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-  app.configure('development', function(){  
+  app.configure('development', function(){
     app.locals.pretty = true;
-});
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+  });
 }
+
+app.configure('production', function(){
+  app.use(express.errorHandler());
+});
 
 var user = require('./routes/user'),
 entry = require('./routes/entry'),
+proposal = require('./routes/proposal'),
 chart = require('./routes/chart');
 
 app.get('/', routes.index);
 app.get('/entry', ensureAuthenticated, entry.list);
 app.get('/entry/list/:id', ensureAuthenticated, entry.list);
 app.get('/entry/listJSON/:id', ensureAuthenticated, entry.listJSON);
-app.get('/entry/user/:userId/list/:id', ensureAuthenticated, entry.list);
 app.get('/entry/user/:userId/listJSON/:id', ensureAuthenticated, entry.listJSON);
 app.get('/entry/listLastRecommandationsJSON', entry.listLastRecommandationsJSON);
+app.get('/entry/listUserLastRecommandationsJSON', entry.listUserLastRecommandationsJSON);
 app.get('/entry/viewAdd', ensureAuthenticated, entry.viewAddMovie);
 app.get('/entry/viewUpdate/:id', ensureAuthenticated, entry.viewUpdateMovie);
 app.post('/entry/post',  ensureAuthenticated, entry.postMovie);
 app.get('/entry/delete/:id', ensureAuthenticated, entry.deleteMovie);
 app.post('/entry/update/:id', ensureAuthenticated, entry.updateMovie);
 
-app.get('/user/listJSON', user.listJSON)
+app.get('/user/listJSON', ensureAuthenticated, user.listJSON)
 app.get('/user/viewAdd', ensureAuthenticated, user.viewAddUser);
 app.get('/user/viewUpdate/:id', ensureAuthenticated, user.viewUpdateUser);
 app.get('/user/view/:id', ensureAuthenticated, user.viewDetails);
-app.post('/user/post',  user.postUser);
+app.post('/user/post', ensureAuthenticated, user.postUser);
 
-app.get('/chart/show', chart.show);
+app.get('/proposal', ensureAuthenticated, proposal.list);
+app.get('/proposal/viewAdd', ensureAuthenticated, proposal.viewAddProposal);
+app.post('/proposal/post', ensureAuthenticated, proposal.postProposal);
+
+app.get('/chart/show', ensureAuthenticated, chart.show);
 
 
 // GET /auth/facebook
