@@ -7,17 +7,21 @@ Node JS Application for Cinema Management
   $ npm install
 ```
 
-Ne pas oublier dans le fichier app.js, les variables suivantes :
+Ne pas oublier dans le fichier app.js, les variables environnement suivantes :
 ```sh
 APP_ID
 APP_SECRET
-CALLBACK_URL
-MONGO_URL
+CONTEXT_PATH
+MONGO_URI
 ```
 
 Lancer serveur
 ```sh
   $ nodemon app.js
+```
+Pour activer le livereload
+```sh
+  $ grunt livereload
 ```
 
 Lancer le navigateur
@@ -45,14 +49,14 @@ Lancer le navigateur
  $ git remote add origin https://github.com/sfoubert/cinejs.git
  $ git remote -v
  $ git push -u origin master
-
+ $ git reset --soft HEAD~1
+ 
 ## Heroku
  $ heroku login
  $ heroku keys:add
  $ //git remote add heroku git@heroku.com:cinejs.git
  $ heroku git:remote -a cinejs
  $ git push heroku master
- $ git reset --soft HEAD~1
  
  ```
 

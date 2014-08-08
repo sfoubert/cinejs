@@ -1,0 +1,7 @@
+{
+  "name": "cinejs",
+  "dependencies": {
+  	"jquery": "1.11.1",
+  	"angular": "1.2.21"
+  }
+}

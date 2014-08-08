@@ -8,17 +8,20 @@ function postMessage(access_token, message) {
         message: message
     };
 
-	// Send the request
-    request.post({url: url, qs: params}, function(err, resp, body) {
-      
-      // Handle any errors that occur
-      if (err) return console.error("Error occured: ", err);
-      body = JSON.parse(body);
-      if (body.error) return console.error("Error returned from facebook: ", body.error);
+    // Send the request
+    request.post({
+        url: url,
+        qs: params
+    }, function(err, resp, body) {
 
-      // Generate output
-      var output = 'Message has been posted :' + JSON.stringify(body, null, '\t');
-      console.log("Post message : " + output);
+        // Handle any errors that occur
+        if (err) return console.error("Error occured: ", err);
+        body = JSON.parse(body);
+        if (body.error) return console.error("Error returned from facebook: ", body.error);
+
+        // Generate output
+        var output = 'Message has been posted :' + JSON.stringify(body, null, '\t');
+        console.log("Post message : " + output);
     });
 
 }
