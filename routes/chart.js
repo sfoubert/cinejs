@@ -58,9 +58,10 @@ exports.show = function(req, res) {
   },
   ...]
   */
-
+        console.log(req.user._id);
         EntryModel.aggregate({
-                $match: { /*user : req.user._id,*/
+                $match: {
+                    user: mongoose.Types.ObjectId(req.user._id),
                     viewdate: {
                         $exists: true,
                         $gte: new Date(year + '-01-01'),
@@ -91,7 +92,8 @@ exports.show = function(req, res) {
 
     } else if (req.query.view == 'year') {
         EntryModel.aggregate({
-                $match: { /*user : req.user._id,*/
+                $match: {
+                    user: mongoose.Types.ObjectId(req.user._id),
                     viewdate: {
                         $exists: true
                     }

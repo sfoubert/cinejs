@@ -21,7 +21,8 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'jquery.min.js': 'jquery/dist/jquery.min.js',
-                    'angular.min.js': 'angular/angular.min.js'
+                    'angular.min.js': 'angular/angular.min.js',
+                    'angular-animate.min.js': 'angular-animate/angular-animate.min.js'
                 }
             }
         },

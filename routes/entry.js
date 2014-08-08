@@ -158,8 +158,9 @@ exports.postMovie = function(req, res) {
 
     // post message to fb
     if (req.user != null && req.body.recommandation == 'on') {
-        var message = req.user.firstname + ' ' + req.user.name + " recommande " + req.body.title + "\n";
-        message += "from http://cinejs.herokuapp.com";
+        var message = req.user.firstname + ' ' + req.user.name + " recommande " + req.body.title + " à " + req.body.score + '%' + "\n";
+        message += "from ";
+        message += process.env.CONTEXT_PATH;
         fb.postMessage(req.session.accessToken, message);
     }
 
