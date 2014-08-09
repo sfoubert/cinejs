@@ -1,41 +1,56 @@
-
 /* controllers */
 
 var cineControllers = angular.module('cineControllers', []);
 
 cineControllers.controller('CinemaController', function($scope, $http, MovieFactory) {
-  $scope.wait = "/images/wait.gif";
-  $scope.movieFactory = new MovieFactory();
+    $scope.wait = "/images/wait.gif";
+    $scope.movieFactory = new MovieFactory();
 });
 
-cineControllers.controller('IndexController', function($scope, $http) {
-  $scope.entries = [];
+cineControllers.controller('IndexController', function($scope, $http, $timeout) {
+    $scope.entries = [];
+    $scope.ready = 'true';
+    $scope.autoChanges=true;
+    $scope.time=300;
+    $scope.currentEntry = 0;
 
-  $scope.findLastRecommandations = function() {
-    $http.get('/entry/listLastRecommandationsJSON').success(function(data) {
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].user != null) {
-            $scope.entries.push(data[i]);
-          }
+    $scope.findLastRecommandations = function() {
+        $http.get('/entry/listLastRecommandationsJSON').success(function(data) {
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].user != null) {
+                    $scope.entries.push(data[i]);
+                }
+            }
+        });
+    };
+    $scope.findLastRecommandations();
+
+    // auto carousel animation
+    function doSomething() {
+        if ($scope.autoChanges) {
+            $scope.currentEntry = $scope.currentEntry + 1;
+            if($scope.currentEntry == $scope.entries.length){
+              $scope.currentEntry = 0;
+            }
         }
-    });
-  };
-  $scope.findLastRecommandations();
+        $timeout(doSomething, 1500 + getRandomInt(1000) + tryParseInt($scope.time, 1000));
+    }
+    $timeout(doSomething, 1500 + getRandomInt(1000) + tryParseInt($scope.time, 1000));
 
 });
 
 cineControllers.controller('UserController', function($scope, $http) {
-  $scope.entries = [];
+    $scope.entries = [];
 
-  $scope.findUserLastRecommandations = function() {
-    $http.get('/entry/listUserLastRecommandationsJSON').success(function(data) {
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].user != null) {
-            $scope.entries.push(data[i]);
-          }
-        }
-    });
-  };
-  $scope.findUserLastRecommandations();
+    $scope.findUserLastRecommandations = function() {
+        $http.get('/entry/listUserLastRecommandationsJSON').success(function(data) {
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].user != null) {
+                    $scope.entries.push(data[i]);
+                }
+            }
+        });
+    };
+    $scope.findUserLastRecommandations();
 
 });

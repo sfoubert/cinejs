@@ -11,12 +11,17 @@ block content
 				a(href="/auth/facebook", role="button")
 					img(src="/images/login-with-facebook.png")
 
-	div(ng-controller='IndexController')
-		p Les {{entries.length}} dernières recommandations
-		ul
-			li(ng-repeat='entry in entries')
-				a(href="/user/view/{{entry.user._id}}")
-					img(ng-src="{{entry.user.photo}}")
-					span {{entry.user.firstname}} {{entry.user.name}}
-				span &nbsp;recommande {{entry.movie.title}} 
-				span &nbsp;à {{entry.score | percentFilter}}
+		div(ng-controller='IndexController')
+			p Les dernières recommandations
+
+			div(ng-show="ready", ng-animate="'animate'")
+				div(ng-repeat='entry in entries')
+					div(ng-switch="currentEntry == $index")
+						div(ng-switch-when="true")
+							a(href="/user/view/{{entry.user._id}}")
+								img(ng-src="{{entry.user.photo}}")
+								span {{entry.user.firstname}} {{entry.user.name}}
+							span &nbsp;a vu le {{entry.viewdate | dateFilter}}
+							span &nbsp;et recommande {{entry.movie.title}} 
+							span &nbsp;à {{entry.score | percentFilter}}
+
