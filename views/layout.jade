@@ -30,7 +30,7 @@ html(lang='fr', ng-app='cineApp')
 	block link
 	- var menu = {}
 		if(user != null)
-			- menu = {'Liste': '/entry', 'Ajouter un film': '/entry/viewAdd' , 'Mes propositions': '/proposal' };
+			- menu = {'Liste': '/entry', 'Ajouter un film': '/entry/viewAdd' /*, 'Mes propositions': '/proposal'*/ };
 
 	body
 		a(href='https://github.com/sfoubert')
