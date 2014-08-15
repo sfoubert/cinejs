@@ -22,6 +22,7 @@ block content
 								img(ng-src="{{entry.user.photo}}")
 								span {{entry.user.firstname}} {{entry.user.name}}
 							span &nbsp;a vu le {{entry.viewdate | dateFilter}}
-							span &nbsp;et recommande {{entry.movie.title}} 
+							span &nbsp;et recommande
+								strong &nbsp;{{entry.movie.title}}
 							span &nbsp;à {{entry.score | percentFilter}}
 
