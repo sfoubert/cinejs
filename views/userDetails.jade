@@ -18,11 +18,12 @@ block content
 						div.panel-heading
 							h3.panel-title Les {{recommandations.length}} dernières recommandations
 						div.panel-body
-							ul.list-group
-								li(ng-repeat='entry in recommandations')
-									a(href="/user/view/{{entry.user._id}}")
+							ul.media-list
+								li.media(ng-repeat='entry in recommandations')
+									a.pull-left(href="/user/view/{{entry.user._id}}")
 										img(ng-src="{{entry.user.photo}}")
-										span {{entry.user.firstname}} {{entry.user.name}}
+									a(href="/user/view/{{entry.user._id}}")
+										h4 {{entry.user.firstname}} {{entry.user.name}}
 									span &nbsp;recommande {{entry.movie.title}} 
 									span &nbsp;à {{entry.score | percentFilter}}
 				div.col-md-6
@@ -30,11 +31,12 @@ block content
 						div.panel-heading
 							h3.panel-title Les {{entries.length}} derniers films vus
 						div.panel-body
-							ul.list-group
-								li(ng-repeat='entry in entries')
-									a(href="/user/view/{{entry.user._id}}")
+							ul.media-list
+								li.media(ng-repeat='entry in entries')
+									a.pull-left(href="/user/view/{{entry.user._id}}")
 										img(ng-src="{{entry.user.photo}}")
-										span {{entry.user.firstname}} {{entry.user.name}}
+									a(href="/user/view/{{entry.user._id}}")
+										h4 {{entry.user.firstname}} {{entry.user.name}}
 									span &nbsp;le {{entry.viewdate | dateFilter}}
 									span &nbsp;a vu {{entry.movie.title}} 
 				//- .btn-group

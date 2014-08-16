@@ -152,7 +152,7 @@ exports.viewUpdateMovie = function(req, res) {
 };
 
 exports.postMovie = function(req, res) {
-    console.log('Post movie : ' + req.body);
+    console.log('Post movie : ' + JSON.stringify(req.body));
     var viewdate = req.body.viewdate.substring(6, 10) + '-' + req.body.viewdate.substring(3, 5) + '-' + req.body.viewdate.substring(0, 2);
 
     var movie = new MovieModel();
@@ -179,6 +179,7 @@ exports.postMovie = function(req, res) {
         fb.postMessage(req.session.accessToken, message);
     }
 
+    console.log('Post entry : ' + JSON.stringify(entry));
     entry.save(function(e) {
         res.redirect('/entry');
     });

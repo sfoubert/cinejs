@@ -18,11 +18,14 @@ block content
 				div(ng-repeat='entry in entries')
 					div(ng-switch="currentEntry == $index")
 						div(ng-switch-when="true")
-							a(href="/user/view/{{entry.user._id}}")
-								img(ng-src="{{entry.user.photo}}")
-								span {{entry.user.firstname}} {{entry.user.name}}
-							span &nbsp;a vu le {{entry.viewdate | dateFilter}}
-							span &nbsp;et recommande
-								strong &nbsp;{{entry.movie.title}}
-							span &nbsp;à {{entry.score | percentFilter}}
+							ul.media-list
+								li.media
+									a.pull-left(href="/user/view/{{entry.user._id}}")
+										img(ng-src="{{entry.user.photo}}")
+									a(href="/user/view/{{entry.user._id}}")
+										h4 {{entry.user.firstname}} {{entry.user.name}}
+									span &nbsp;a vu le {{entry.viewdate | dateFilter}}
+									span &nbsp;et recommande
+										strong &nbsp;{{entry.movie.title}}
+									span &nbsp;à {{entry.score | percentFilter}}
 

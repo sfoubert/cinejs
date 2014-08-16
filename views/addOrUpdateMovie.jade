@@ -10,7 +10,7 @@ block content
 		$(document).ready(function() {
 			$('#viewdate').datepicker();
 
-			$('#ex1').slider({
+			$('#score').slider({
 				formater: function(value) {
 					return 'Score: ' + value;
 				}
@@ -36,8 +36,7 @@ block content
 					textarea.form-control(rows="3", name='comment', type='text', placeholder='Commentaire') #{entry.comment}
 				div.form-group
 					label Score (en pourcentage)
-					//- input.form-control(name='score', type='text', placeholder='80', value=entry.score)
-					input.form-control(id="ex1", data-slider-id='ex1Slider', type="text", data-slider-min="0", data-slider-max="100", data-slider-step="1", data-slider-value=entry.score)
+					input.form-control(id="score", name="score", data-slider-id='score', type="text", data-slider-min="0", data-slider-max="100", data-slider-step="1", data-slider-value=entry.score)
 				div.form-group
 					label Recommandé
 					input.form-control(name='recommandation', type='checkbox', checked="checked", value=entry.recommandation)
