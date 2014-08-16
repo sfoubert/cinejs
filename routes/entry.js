@@ -85,9 +85,24 @@ exports.listLastRecommandationsJSON = function(req, res) {
 };
 
 exports.listUserLastRecommandationsJSON = function(req, res) {
+    var userId = req.param('userId');
     EntryModel.find({
-        user: req.user._id,
+        user: mongoose.Types.ObjectId(userId),
         recommandation: true
+    }).sort({
+        viewdate: -1
+    }).limit(30).populate('movie user').exec(function(err, result) {
+        if (err) {
+            throw err;
+        }
+        res.send(result);
+    });
+};
+
+exports.listUserLastEntriesJSON = function(req, res) {
+    var userId = req.param('userId');
+    EntryModel.find({
+        user: mongoose.Types.ObjectId(userId)
     }).sort({
         viewdate: -1
     }).limit(30).populate('movie user').exec(function(err, result) {

@@ -23,7 +23,7 @@ exports.viewDetails = function(req, res) {
         }
 
         res.render('userDetails', {
-            title: 'Informations',
+            title: 'Détail de l\'utilisateur',
             user: result,
             moment: moment
         });

@@ -9,6 +9,12 @@ block content
 	script.
 		$(document).ready(function() {
 			$('#viewdate').datepicker();
+
+			$('#ex1').slider({
+				formater: function(value) {
+					return 'Score: ' + value;
+				}
+			});
 		});
 
 	div.span12
@@ -18,7 +24,7 @@ block content
 				legend Mon film
 				div.form-group
 					label Titre
-					input.form-control(name='title', type='text', placeholder='Titre', value=movieTitle)
+					input.form-control(name='title', type='text', placeholder='Titre', autofocus="", required="", value=movieTitle)
 				div.form-group
 					label Date
 					div.input-append.date(id='viewdate', data-date=moment(entry.viewdate).format("DD-MM-YYYY"), data-date-format='dd-mm-yyyy')
@@ -30,7 +36,8 @@ block content
 					textarea.form-control(rows="3", name='comment', type='text', placeholder='Commentaire') #{entry.comment}
 				div.form-group
 					label Score (en pourcentage)
-					input.form-control(name='score', type='text', placeholder='80', value=entry.score)
+					//- input.form-control(name='score', type='text', placeholder='80', value=entry.score)
+					input.form-control(id="ex1", data-slider-id='ex1Slider', type="text", data-slider-min="0", data-slider-max="100", data-slider-step="1", data-slider-value=entry.score)
 				div.form-group
 					label Recommandé
 					input.form-control(name='recommandation', type='checkbox', checked="checked", value=entry.recommandation)

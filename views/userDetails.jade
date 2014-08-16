@@ -9,19 +9,37 @@ block content
 	br
 	p Dernière connexion : #{moment(user.lastLogin).format("DD-MM-YYYY HH:mm:ss")}
 
-	div(ng-controller='UserController')
-		p Les {{entries.length}} dernières recommandations
-		ul
-			li(ng-repeat='entry in entries')
-				a(href="/user/view/{{entry.user._id}}")
-					img(ng-src="{{entry.user.photo}}")
-					span {{entry.user.firstname}} {{entry.user.name}}
-				span &nbsp;recommande {{entry.movie.title}} 
-				span &nbsp;à {{entry.score | percentFilter}}
+	div(ng-controller='UserController' ng-init="initUser('#{user._id}')")
 
-	//- .btn-group
-	//- 	a(href='/proposal/viewAdd')
-	//- 		button.btn.btn-primary Faire une proposition
+		div.container
+			div.row
+				div.col-md-6
+					div.panel.panel-default
+						div.panel-heading
+							h3.panel-title Les {{recommandations.length}} dernières recommandations
+						div.panel-body
+							ul.list-group
+								li(ng-repeat='entry in recommandations')
+									a(href="/user/view/{{entry.user._id}}")
+										img(ng-src="{{entry.user.photo}}")
+										span {{entry.user.firstname}} {{entry.user.name}}
+									span &nbsp;recommande {{entry.movie.title}} 
+									span &nbsp;à {{entry.score | percentFilter}}
+				div.col-md-6
+					div.panel.panel-default
+						div.panel-heading
+							h3.panel-title Les {{entries.length}} derniers films vus
+						div.panel-body
+							ul.list-group
+								li(ng-repeat='entry in entries')
+									a(href="/user/view/{{entry.user._id}}")
+										img(ng-src="{{entry.user.photo}}")
+										span {{entry.user.firstname}} {{entry.user.name}}
+									span &nbsp;le {{entry.viewdate | dateFilter}}
+									span &nbsp;a vu {{entry.movie.title}} 
+				//- .btn-group
+				//- 	a(href='/proposal/viewAdd')
+				//- 		button.btn.btn-primary Faire une proposition
 
-		//- a(href='/entry')
-		//- 	button.btn.btn-primary Liste des films
+					//- a(href='/entry')
+					//- 	button.btn.btn-primary Liste des films

@@ -22,7 +22,13 @@ module.exports = function(grunt) {
                 files: {
                     'jquery.min.js': 'jquery/dist/jquery.min.js',
                     'angular.min.js': 'angular/angular.min.js',
-                    'angular-animate.min.js': 'angular-animate/angular-animate.min.js'
+                    'angular-animate.min.js': 'angular-animate/angular-animate.min.js',
+                    'angular-route.min.js': 'angular-route/angular-route.min.js',
+                    '../bootstrap': 'bootstrap/dist',
+                    'modernizr.js': 'modernizr/modernizr.js',
+                    'bootstrap-slider.min.js': 'seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
+                    '../bootstrap/css/bootstrap-slider.min.css': 'seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css'
+                    
                 }
             }
         },

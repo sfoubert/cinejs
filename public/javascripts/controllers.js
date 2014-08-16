@@ -39,11 +39,17 @@ cineControllers.controller('IndexController', function($scope, $http, $timeout) 
 
 });
 
-cineControllers.controller('UserController', function($scope, $http) {
+cineControllers.controller('UserController', function($scope, $http, $routeParams) {
     $scope.entries = [];
+    $scope.recommandations = [];
 
-    $scope.findUserLastRecommandations = function() {
-        $http.get('/entry/listUserLastRecommandationsJSON').success(function(data) {
+    $scope.initUser = function(userId) {
+        $scope.listUserLastEntriesJSON(userId);
+        $scope.findUserLastRecommandations(userId);
+    };
+
+    $scope.listUserLastEntriesJSON = function(userId) {
+        $http.get('/entry/user/' + userId + '/listLastEntriesJSON').success(function(data) {
             for (var i = 0; i < data.length; i++) {
                 if (data[i].user != null) {
                     $scope.entries.push(data[i]);
@@ -51,6 +57,16 @@ cineControllers.controller('UserController', function($scope, $http) {
             }
         });
     };
-    $scope.findUserLastRecommandations();
+
+    $scope.findUserLastRecommandations = function(userId) {
+        $http.get('/entry/user/' + userId + '/listLastRecommandationsJSON').success(function(data) {
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].user != null) {
+                    $scope.recommandations.push(data[i]);
+                }
+            }
+        });
+    };
+
 
 });

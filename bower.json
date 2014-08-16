@@ -2,7 +2,11 @@
   "name": "cinejs",
   "dependencies": {
   	"jquery": "1.11.1",
+  	"bootstrap": "3.2.0",
+  	"modernizr": "2.8.3",
   	"angular": "1.2.21",
-  	"angular-animate": "1.2.21"
+  	"angular-animate": "1.2.21",
+  	"angular-route": "1.2.21",
+  	"seiyria-bootstrap-slider" : "3.1.0"
   }
 }

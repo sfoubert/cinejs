@@ -2,7 +2,8 @@ var cineApp = angular.module('cineApp', ['cineControllers',
     'cineServices',
     'cineFilters',
     'infinite-scroll',
-    'ngAnimate'
+    'ngAnimate',
+    'ngRoute'
 ]);
 
 // allow CORS request control
