@@ -3,15 +3,18 @@ extends layout
 block content
 	h1= title
 
-	p #{user.displayName}
-	br
-	img(src="#{user.photo}")
-	br
-	p Dernière connexion : #{moment(user.lastLogin).format("DD-MM-YYYY HH:mm:ss")}
-
 	div(ng-controller='UserController' ng-init="initUser('#{user._id}')")
 
 		div.container
+			div.row
+				div.col-md-12
+					ul.media-list
+						li.media
+							a.pull-left(href="/user/view/{{entry.user._id}}")
+								img(ng-src="#{user.photo}")
+							a(href="/user/view/#{user._id}")
+								h4 #{user.displayName}
+							p Dernière connexion : #{moment(user.lastLogin).format("DD-MM-YYYY HH:mm:ss")}
 			div.row
 				div.col-md-6
 					div.panel.panel-default
