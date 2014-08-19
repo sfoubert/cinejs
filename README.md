@@ -1,5 +1,6 @@
 cinejs
 ======
+[![Build Status](https://travis-ci.org/sfoubert/cinejs.svg?branch=master)](https://travis-ci.org/sfoubert/cinejs)
 
 Node JS Application for Cinema Management
 ```sh
