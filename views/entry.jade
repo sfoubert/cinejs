@@ -11,7 +11,6 @@ block content
 
 	div(ng-controller='CinemaController')
 
-
 		div(infinite-scroll='movieFactory.loadMore()', infinite-scroll-disabled='infinite-scroll.busy', infinite-scroll-distance='0')
 			table.table
 				tr
@@ -26,7 +25,7 @@ block content
 					td {{entry.score | percentFilter }}
 					td
 						div.btn-group
-							a.btn.clickMovieModal(href='#movieModal', role='button', data-toggle='modal', movie-title='{{entry.movie.title}}')
+							a.btn.clickMovieModal(href='#movieModal', role='button', movie-title='{{entry.movie.title}}')
 								i.glyphicon.glyphicon-search
 					td
 						div.btn-group
@@ -54,12 +53,19 @@ block content
 
 	script.
 		$(document).ready(function() {
+			$('.clickMovieModal').click(function (event) {
+				//- alert('test');
+				//- $("#poster").attr("src","/images/wait.gif");
+				//- console.log('se : ' + $(this).attr('movie-title'));
+				//- $('#movieTitle').val($(this).attr('movie-title'));
+				//- $('#movieModalLabel').html($(this).attr('movie-title'));
+				$('#movieModal').modal({
+					show: true
+				});
+			});
 
-			$(".clickMovieModal").click(function (event) {
-				$("#poster").attr("src","/images/wait.gif");
-				console.log('se : ' + $(this).attr('movie-title'));
-				$('#movieTitle').val($(this).attr('movie-title'));
-				$('#movieModalLabel').html($(this).attr('movie-title'));
+			$('#movieModal').on('shown.bs.modal', function () {
+				alert('show');
 			});
 
 		});

@@ -1,4 +1,4 @@
-  var user = {
+﻿  var user = {
 	  name : "Foubert",
 	  firstname : "Sébastien",
 	  gender : "male",
@@ -928,4 +928,23 @@ saveMovie("The Raid 2","2014-07-29")
 saveMovie("La plan\u00E8te des singes : L'affrontement","2014-07-31")
 saveMovie("Mister Babadook","2014-08-04")
 
+saveMovie("Les vacances du petit Nicolas","2014-08-07")
+saveMovie("Nos pires voisins","2014-08-11")
+saveMovie("Lucy","2014-08-17")
+saveMovie("Lucy","2014-08-18")
 
+saveMovie("Gone girl","2014-10-12")
+saveMovie("Bodybuilder","2014-10-03")
+saveMovie("Dracula : Untold","2014-10-01")
+saveMovie("Un homme tr\u00E8s recherch\u00E9","2014-09-26")
+saveMovie("Br\u00E8ve de comptoir","2014-09-25")
+saveMovie("Bon r\u00E9tablissement","2014-09-22")
+saveMovie("D\u00E9livre nous du mal","2014-09-15")
+saveMovie("Enemy","2014-09-12")
+saveMovie("Hercule","2014-09-09")
+saveMovie("Expendables 3","2014-09-08")
+saveMovie("Les combattants","2014-09-03")
+saveMovie("SMS","2014-08-22")
+saveMovie("Blackstorm","2014-08-21")
+saveMovie("Catacombes","2014-08-20")
+saveMovie("Les gardiens de la galaxie","2014-08-19")

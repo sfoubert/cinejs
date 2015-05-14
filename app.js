@@ -80,9 +80,8 @@ passport.use(new FacebookStrategy({
                     return done(err);
                 }
 
-
                 if (user != null) {
-                    // met a jour l'heure connection
+                    // met a jour l'heure connexion
                     UserModel.update({
                             _id: user._id
                         }, {
@@ -201,7 +200,7 @@ app.get('/chart/show', ensureAuthenticated, chart.show);
 //   redirect the user back to this application at /auth/facebook/callback
 app.get('/auth/facebook',
     passport.authenticate('facebook', {
-        scope: ['user_about_me', 'user_photos', 'email', 'publish_stream', 'publish_actions']
+        scope: ['user_about_me', 'user_photos', 'email', 'publish_actions']
     }),
     function(req, res) {
         // The request will be redirected to Facebook for authentication, so this
@@ -233,10 +232,11 @@ app.get('/logout', function(req, res) {
 //   login page.
 
 function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
+/*    if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/');
+    res.redirect('/');*/
+    return next();
 }
 
 http.createServer(app).listen(app.get('port'), function() {

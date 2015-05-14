@@ -2,9 +2,34 @@ extends layout
 
 block content
 
+
+	div#myCarousel.carousel.slide(data-interval="3000", data-ride="carousel")
+		ol.carousel-indicators
+			li.active(data-target="#myCarousel", data-slide-to="0")
+			li(data-target="#myCarousel", data-slide-to="1")
+			li(data-target="#myCarousel", data-slide-to="2")
+		.carousel-inner
+			.active.item
+				h2 Vos entrées
+				.carousel-caption
+					p CinemaJS est une application permettant d'enregistrer vos entrées au cinéma.
+			.item
+				h2 Vos statistiques
+				.carousel-caption
+					p CinemaJS est une application permettant de générer vos statistiques d'entrées mensuelles et annuelles.
+			.item
+				h2 Vos partages sociaux
+				.carousel-caption
+					p CinemaJS est une application permettant de partager vos recommandations.
+		//- a.carousel-control.left(href="#myCarousel", data-slide="prev")
+		//- 	span.glyphicon.glyphicon-chevron-left
+		//- a.carousel-control.right(href="#myCarousel", data-slide="next")
+		//- 	span.glyphicon.glyphicon-chevron-right
+
 	.jumbotron
-		h1= title
-		p CinemaJS est une application permettant d'enregistrer vos entrées au cinéma, de générer vos statistiques, et partager vos recommandations.
+		div(align="center")
+			h1= title
+
 		if(user == null)
 			div(align="center")
 				a(href="/auth/facebook", role="button")
@@ -13,9 +38,9 @@ block content
 		div(ng-controller='IndexController')
 			p Les dernières recommandations
 
-			div(ng-show="ready", ng-animate="'animate'")
+			div(ng-show="ready")
 				div(ng-repeat='entry in entries')
-					div(ng-switch="currentEntry == $index")
+					div(ng-switch="currentEntry == $index", ng-animate="'animate'")
 						div(ng-switch-when="true")
 							ul.media-list
 								li.media
@@ -27,4 +52,3 @@ block content
 									span &nbsp;et recommande
 										strong &nbsp;{{entry.movie.title}}
 									span &nbsp;à {{entry.score | percentFilter}}
-
