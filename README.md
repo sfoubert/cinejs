@@ -40,12 +40,18 @@ Lancer le navigateur
  db.getCollectionNames()
 ```
 
+Dump and restore Mongo DB
 ```sh
 mongo ds055709.mlab.com:55709/cinema -u <username> -p <password>
 show collections
+
 mongodump.exe --host ds055709.mlab.com --port 55709 --db cinema --collection user -u <username> -p <password> --out cinema.dump
 mongodump.exe --host ds055709.mlab.com --port 55709 --db cinema --collection movie -u <username> -p <password> --out cinema.dump
 mongodump.exe --host ds055709.mlab.com --port 55709 --db cinema --collection entry -u <username> -p <password> --out cinema.dump
+
+mongorestore.exe --host localhost --port 27017 --db cinema --collection user cinema.dump/cinema/user.bson
+mongorestore.exe --host localhost --port 27017 --db cinema --collection movie cinema.dump/cinema/movie.bson
+mongorestore.exe --host localhost --port 27017 --db cinema --collection entry cinema.dump/cinema/entry.bson
 
 ```
 
