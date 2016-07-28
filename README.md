@@ -52,7 +52,13 @@ mongodump.exe --host ds055709.mlab.com --port 55709 --db cinema --collection ent
 mongorestore.exe --host localhost --port 27017 --db cinema --collection user cinema.dump/cinema/user.bson
 mongorestore.exe --host localhost --port 27017 --db cinema --collection movie cinema.dump/cinema/movie.bson
 mongorestore.exe --host localhost --port 27017 --db cinema --collection entry cinema.dump/cinema/entry.bson
+```
 
+Connector
+```sh
+pip install mongo-connector
+pip install elastic2-doc-manager
+mongo-connector -m localhost:27017 -t localhost:9200 -d elastic2_doc_manager
 ```
 
 ## Commandes Git
