@@ -40,6 +40,15 @@ Lancer le navigateur
  db.getCollectionNames()
 ```
 
+```sh
+mongo ds055709.mlab.com:55709/cinema -u <username> -p <password>
+show collections
+mongodump.exe --host ds055709.mlab.com --port 55709 --db cinema --collection user -u <username> -p <password> --out cinema.dump
+mongodump.exe --host ds055709.mlab.com --port 55709 --db cinema --collection movie -u <username> -p <password> --out cinema.dump
+mongodump.exe --host ds055709.mlab.com --port 55709 --db cinema --collection entry -u <username> -p <password> --out cinema.dump
+
+```
+
 ## Commandes Git
  ```sh
  $ git add .
