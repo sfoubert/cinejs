@@ -7,6 +7,8 @@ var express = require('express'),
     path = require('path'),
     mongoose = require('mongoose'),
     passport = require('passport'),
+    elasticsearchService = require('./services/elasticsearchService'),
+    Q = require('q'),
     FacebookStrategy = require('passport-facebook').Strategy,
     routes = require('./routes');
 
@@ -30,11 +32,11 @@ mongoose.connect(MONGO_URI, function(err) {
 });
 
 // Bootstrap models
-var models_path = __dirname + '/models'
+var models_path = __dirname + '/models';
 fs.readdirSync(models_path).forEach(function(file) {
     console.log('load module ' + models_path + '/' + file);
     require(models_path + '/' + file);
-})
+});
 
 var UserModel = mongoose.model('User');
 
@@ -89,7 +91,7 @@ passport.use(new FacebookStrategy({
                             name: profile.name.familyName,
                             firstname: profile.name.givenName,
                             gender: profile.gender,
-                            photo: profile.photos[0].value,
+                            photo: profile.photos[0].value
                             //birthday : profile.birthday
                         },
                         function(err) {
@@ -180,7 +182,7 @@ app.post('/entry/post', ensureAuthenticated, entry.postMovie);
 app.get('/entry/delete/:id', ensureAuthenticated, entry.deleteMovie);
 app.post('/entry/update/:id', ensureAuthenticated, entry.updateMovie);
 
-app.get('/user/listJSON', ensureAuthenticated, user.listJSON)
+app.get('/user/listJSON', ensureAuthenticated, user.listJSON;
 app.get('/user/viewAdd', ensureAuthenticated, user.viewAddUser);
 app.get('/user/viewUpdate/:id', ensureAuthenticated, user.viewUpdateUser);
 app.get('/user/view/:id', ensureAuthenticated, user.viewDetails);
@@ -242,3 +244,14 @@ function ensureAuthenticated(req, res, next) {
 http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
 });
+
+
+
+app.get("/search", function (req, res) {
+    var termToSearch = req.query.termToSearch;
+    console.log("termToSearch=" + termToSearch);
+    Q(elasticsearchService.performSearch(termToSearch)
+    ).then(function (data) {
+        res.send(data);
+    });
+})
