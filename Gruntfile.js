@@ -27,7 +27,8 @@ module.exports = function(grunt) {
                     '../bootstrap': 'bootstrap/dist',
                     'modernizr.js': 'modernizr/modernizr.js',
                     'bootstrap-slider.min.js': 'seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
-                    '../bootstrap/css/bootstrap-slider.min.css': 'seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css'
+                    '../bootstrap/css/bootstrap-slider.min.css': 'seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css',
+                    'typeahead.js': 'typeahead.js/dist'
                     
                 }
             }

@@ -17,7 +17,7 @@ function performSearch(termToSearch) {
     console.log("Request handler 'search' was called.");
     var qryObj = {
         "query" : {
-            "match" : { "title":termToSearch }
+            "match_phrase_prefix" : { "title":termToSearch }
         }
     };
     elasticSearchClient.search(index, type, qryObj).

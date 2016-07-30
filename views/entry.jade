@@ -1,71 +1,106 @@
 extends layout
 
 block link
-	- var selected = 'Liste';
-	
+    - var selected = 'Liste';
+
 block content
-	h1= title
+    h1= title
 
-	span.badge.badge-inverse #{count}
-	span films
+    div
+        span Recherche
+        input.typeahead.tt-query(type="text")
 
-	div(ng-controller='CinemaController')
+    span.badge.badge-inverse #{count}
+    span films
 
-		div(infinite-scroll='movieFactory.loadMore()', infinite-scroll-disabled='infinite-scroll.busy', infinite-scroll-distance='0')
-			table.table
-				tr
-					th Titre
-					th Date
-					th Score
-					th Imdb
-					th Actions
-				tr.success(ng-repeat='entry in movieFactory.movies')
-					td {{entry.movie.title}}
-					td {{entry.viewdate | dateFilter}}
-					td {{entry.score | percentFilter }}
-					td
-						div.btn-group
-							a.btn.clickMovieModal(href='#movieModal', role='button', movie-title='{{entry.movie.title}}')
-								i.glyphicon.glyphicon-search
-					td
-						div.btn-group
-							a(href='/entry/viewUpdate/{{entry._id}}')
-								button.btn.btn-primary(type='button') Modifier
-							a(href='/entry/delete/{{entry._id}}')
-								button.btn.btn-primary(type='button') Supprimer
+    div(ng-controller='CinemaController')
 
-			input(type='hidden', id="movieTitle", value="")
+        div(infinite-scroll='movieFactory.loadMore()', infinite-scroll-disabled='infinite-scroll.busy', infinite-scroll-distance='0')
+            table.table
+                tr
+                    th Titre
+                    th Date
+                    th Score
+                    th Imdb
+                    th Actions
+                tr.success(ng-repeat='entry in movieFactory.movies')
+                    td {{entry.movie.title}}
+                    td {{entry.viewdate | dateFilter}}
+                    td {{entry.score | percentFilter }}
+                    td
+                        div.btn-group
+                            a.btn.clickMovieModal(href='#movieModal', role='button', movie-title='{{entry.movie.title}}')
+                                i.glyphicon.glyphicon-search
+                    td
+                        div.btn-group
+                            a(href='/entry/viewUpdate/{{entry._id}}')
+                                button.btn.btn-primary(type='button') Modifier
+                            a(href='/entry/delete/{{entry._id}}')
+                                button.btn.btn-primary(type='button') Supprimer
 
-		div(ng-show='infinite-scroll.busy') Loading data...
+            input(type='hidden', id="movieTitle", value="")
 
-	// Modal
-	div#movieModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='movieModalLabel', aria-hidden='true')
-		div.modal-dialog
-			div.modal-content
-				div.modal-header
-					button.close(type='button', data-dismiss='modal', aria-hidden='true') X
-					h3#movieModalLabel
-				div.modal-body
-					p My movie details from IMDB
-					img#poster(src='/images/wait.gif')
-				div.modal-footer
-					button.btn(data-dismiss='modal', aria-hidden='true') Close
+        div(ng-show='infinite-scroll.busy') Loading data...
 
-	script.
-		$(document).ready(function() {
-			$('.clickMovieModal').click(function (event) {
-				//- alert('test');
-				//- $("#poster").attr("src","/images/wait.gif");
-				//- console.log('se : ' + $(this).attr('movie-title'));
-				//- $('#movieTitle').val($(this).attr('movie-title'));
-				//- $('#movieModalLabel').html($(this).attr('movie-title'));
-				$('#movieModal').modal({
-					show: true
-				});
-			});
+    // Modal
+    div#movieModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='movieModalLabel', aria-hidden='true')
+        div.modal-dialog
+            div.modal-content
+                div.modal-header
+                    button.close(type='button', data-dismiss='modal', aria-hidden='true') X
+                    h3#movieModalLabel
+                div.modal-body
+                    p My movie details from IMDB
+                    img#poster(src='/images/wait.gif')
+                div.modal-footer
+                    button.btn(data-dismiss='modal', aria-hidden='true') Close
 
-			$('#movieModal').on('shown.bs.modal', function () {
-				alert('show');
-			});
+    script.
+        $(document).ready(function () {
+            $('.clickMovieModal').click(function (event) {
+                //- alert('test');
+                //- $("#poster").attr("src","/images/wait.gif");
+                //- console.log('se : ' + $(this).attr('movie-title'));
+                //- $('#movieTitle').val($(this).attr('movie-title'));
+                //- $('#movieModalLabel').html($(this).attr('movie-title'));
+                $('#movieModal').modal({
+                    show: true
+                });
+            });
 
-		});
+            $('#movieModal').on('shown.bs.modal', function () {
+                alert('show');
+            });
+
+            var movies = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/search?termToSearch=%QUERY',
+                    wildcard: '%QUERY',
+                    filter: function (res) {
+                        // Map the remote source JSON array to a JavaScript object array
+                        return $.map(res.hits.hits, function (hit) {
+                            return {
+                                value: hit._source.title
+                            };
+                        });
+                    }
+                }
+            });
+
+            movies.initialize();
+
+            $('.typeahead').typeahead({
+                        hint: true,
+                        highlight: true,
+                        minLength: 1
+                    },
+                    {
+                        name: 'movies',
+                        displayKey: 'value',
+                        source: movies.ttAdapter()
+                    }
+            );
+
+        });

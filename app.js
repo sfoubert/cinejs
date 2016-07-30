@@ -182,7 +182,7 @@ app.post('/entry/post', ensureAuthenticated, entry.postMovie);
 app.get('/entry/delete/:id', ensureAuthenticated, entry.deleteMovie);
 app.post('/entry/update/:id', ensureAuthenticated, entry.updateMovie);
 
-app.get('/user/listJSON', ensureAuthenticated, user.listJSON;
+app.get('/user/listJSON', ensureAuthenticated, user.listJSON);
 app.get('/user/viewAdd', ensureAuthenticated, user.viewAddUser);
 app.get('/user/viewUpdate/:id', ensureAuthenticated, user.viewUpdateUser);
 app.get('/user/view/:id', ensureAuthenticated, user.viewDetails);
@@ -226,6 +226,14 @@ app.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
+app.get("/search", function (req, res) {
+    var termToSearch = req.query.termToSearch;
+    console.log("termToSearch=" + termToSearch);
+    Q(elasticsearchService.performSearch(termToSearch)
+    ).then(function (data) {
+        res.send(data);
+    });
+});
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If
@@ -244,14 +252,3 @@ function ensureAuthenticated(req, res, next) {
 http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
 });
-
-
-
-app.get("/search", function (req, res) {
-    var termToSearch = req.query.termToSearch;
-    console.log("termToSearch=" + termToSearch);
-    Q(elasticsearchService.performSearch(termToSearch)
-    ).then(function (data) {
-        res.send(data);
-    });
-})
